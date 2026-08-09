@@ -11,6 +11,54 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.3 — 2026-08-09
+
+- The filter-bar toggle in the view header is now a labeled **View settings**
+  button sitting right of the notification bell, instead of an unlabeled
+  sliders icon. (#360)
+- Email-address links in a message now work: clicking a `mailto:` link opens
+  a new message with the address — and any subject or body the link carries —
+  already filled in. (#341)
+- Right-clicking inside a message now offers **Copy Email Address** on
+  address links, **Copy Link Address** on web links, and **Copy** on selected
+  text. (#341)
+- The combined inbox sidebar gains a **Favourites** group: right-click any view
+  inside an account's section to add it, and it appears above **Filtered
+  views** with its account's label — one click instead of expanding the
+  account every time. Right-click again to remove it. (#345)
+- The filter/sorting bar can now be hidden with the new **View settings**
+  button beside the view name, and the choice is remembered. A blue dot on the
+  button warns when a hidden filter is narrowing the list. (#348)
+- The select-all checkbox moved from the filter bar to the left of the view
+  title, heading the list it selects. Its behavior is unchanged — always
+  visible, tri-state, **Select all**/**Deselect all**. (#346)
+- The combined inbox no longer paints an account-colored stripe on every row —
+  the list reads like a normal thread list. Pinned split-inbox sections keep
+  their color stripe. (#339)
+- The message header now shows the address a mail was delivered to next to
+  the recipient's name — with several accounts or aliases you can see at a
+  glance which address it landed on. Printed conversations list every
+  recipient in full. (#344)
+- Collapsed messages in a conversation now show just the sender's name, like
+  the conversation list — the email address no longer crowds the preview text.
+  (#343)
+- An expanded message in a thread can now be collapsed again — click its
+  header to fold it back to the one-line row. (#342)
+- The sidebar border shows its resize cursor only when dragging would actually
+  change something — a row is cut off or the sidebar is wider than its minimum.
+  (#350)
+- The Inbox now shows unread mail in an **Unread** section above the date groups
+  by default. Turn it off with the **Unread first** toolbar chip and
+  **Update view** — inboxes with a saved view customization are untouched. (#338)
+- The sidebar can now be widened by dragging its right border — up to the point
+  where its longest account or label name fits without truncating. Double-click
+  the border to snap back to the default width; the chosen width is remembered.
+  (#337)
+- A new app icon: a sealed envelope in NoMail blue, drawn in Apple's current
+  icon style. On macOS 26 it renders in real Liquid Glass — including the
+  system's dark, clear and tinted icon modes — and older macOS versions get the
+  matching classic version.
+
 ## 0.7.2 — 2026-08-09
 
 - The identity-color picker on account cards in Settings is now one line tall —
