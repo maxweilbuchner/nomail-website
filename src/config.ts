@@ -13,5 +13,5 @@ export const ISSUES_URL = "https://github.com/maxweilbuchner/nomail-releases/iss
 // From LSMinimumSystemVersion in the packaged app's Info.plist (Electron's floor).
 export const MIN_MACOS = "macOS 12";
 
-// TODO(Max): real public contact address (also referenced by imprint + support).
+// TODO: real public contact address (also referenced by imprint + support).
 export const CONTACT_EMAIL = "[[CONTACT EMAIL]]";
