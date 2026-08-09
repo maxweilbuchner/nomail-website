@@ -11,6 +11,18 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.4 — 2026-08-09
+
+- Hovering a conversation now highlights it with a rounded panel inset from
+  the list's edges instead of a full-width band; selected and open rows use
+  the same shape, as do drafts and outbox rows.
+- The thread list no longer paints a blue bar along the current row's left
+  edge — neither on the last clicked conversation nor while moving through
+  the list with the arrow keys.
+- The view header no longer draws a bottom border — the bar sits flush above
+  the list for a calmer top edge. The border still appears while searching,
+  where it doubles as the search field's focus outline.
+
 ## 0.7.3 — 2026-08-09
 
 - The filter-bar toggle in the view header is now a labeled **View settings**
