@@ -1,0 +1,71 @@
+---
+import icon from "../assets/icon.svg";
+import { withBase } from "../lib/url";
+
+const nav = [
+  { href: "/download/", label: "Download" },
+  { href: "/changelog/", label: "Changelog" },
+  { href: "/support/", label: "Support" },
+];
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="header__brand" href={withBase("/")}>
+      <img src={icon.src} alt="" width="28" height="28" />
+      <span>NoMail</span>
+    </a>
+    <nav class="header__nav" aria-label="Main">
+      {nav.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--nm-bg) 82%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--nm-border);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--nm-fg);
+    font-weight: 650;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+  }
+
+  .header__brand:hover {
+    text-decoration: none;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  .header__nav a {
+    color: var(--nm-fg-secondary);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  .header__nav a:hover {
+    color: var(--nm-fg);
+    text-decoration: none;
+  }
+</style>

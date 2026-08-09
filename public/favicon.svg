@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+  <linearGradient id="brand" x1="0.15" y1="0" x2="0.85" y2="1">
+    <stop offset="0" stop-color="#4c9cef"/>
+    <stop offset="0.52" stop-color="#2383e2"/>
+    <stop offset="1" stop-color="#0f63bf"/>
+  </linearGradient>
+  <radialGradient id="toplight" cx="0.5" cy="0.0" r="0.9">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+    <stop offset="0.45" stop-color="#ffffff" stop-opacity="0.06"/>
+    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="nshadow" x="-25%" y="-25%" width="150%" height="150%">
+    <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#08386f" flood-opacity="0.34"/>
+  </filter>
+</defs><rect x="96" y="96" width="832" height="832" rx="195" ry="195" fill="url(#brand)"/><rect x="96" y="96" width="832" height="832" rx="195" ry="195" fill="url(#toplight)"/><rect x="97.5" y="97.5" width="829" height="829" rx="194" fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="3"/><text x="512" y="552" text-anchor="middle" dominant-baseline="middle" font-family="'SF Pro Display','Helvetica Neue',Arial,sans-serif" font-weight="800" font-size="566" letter-spacing="-0.02em" fill="#ffffff" filter="url(#nshadow)">N</text><rect x="96" y="96" width="832" height="832" rx="195" ry="195" fill="none" stroke="#083a72" stroke-opacity="0.15" stroke-width="4"/></svg>

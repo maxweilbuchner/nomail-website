@@ -1,0 +1,50 @@
+---
+import Base from "../layouts/Base.astro";
+import { CONTACT_EMAIL } from "../config";
+
+// Placeholders render as [[…]] on purpose — an unfilled deploy is visibly
+// unfinished. Fill from src/config.ts and the fields below.
+const FULL_NAME = "[[FULL NAME]]";
+const STREET = "[[STREET AND NUMBER]]";
+const CITY = "[[POSTAL CODE AND CITY]]";
+---
+
+<Base title="Imprint — NoMail" description="Legal disclosure (Impressum) for NoMail.">
+  <div class="container narrow">
+    <article class="prose">
+      <h1>Imprint</h1>
+      <p>Information in accordance with §&nbsp;5 ECG (Austria).</p>
+
+      <h2>Media owner and publisher</h2>
+      <p>
+        {FULL_NAME}<br />
+        {STREET}<br />
+        {CITY}<br />
+        Austria
+      </p>
+      <p>
+        Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </p>
+
+      <h2>Business purpose</h2>
+      <p>Development and distribution of software.</p>
+
+      <h2>Liability for content</h2>
+      <p>
+        The contents of this site were created with care. No liability is assumed for the
+        correctness, completeness, or currency of the content. Links to external websites are
+        outside our control; the operators of linked pages are responsible for their content.
+      </p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 720px;
+  }
+
+  .prose {
+    margin-block: var(--space-8);
+  }
+</style>

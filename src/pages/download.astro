@@ -1,0 +1,79 @@
+---
+import Base from "../layouts/Base.astro";
+import DownloadButtons from "../components/DownloadButtons.astro";
+import { ALL_RELEASES, MIN_MACOS } from "../config";
+import { withBase } from "../lib/url";
+---
+
+<Base
+  title="Download NoMail for macOS"
+  description="Signed, notarized, and auto-updating. Free download for Apple Silicon and Intel Macs."
+>
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>Download NoMail</h1>
+      <p>Signed, notarized, and auto-updating — always the latest release.</p>
+    </header>
+
+    <DownloadButtons />
+
+    <section class="requirements">
+      <h2>Requirements</h2>
+      <ul>
+        <li>{MIN_MACOS} or later, Apple Silicon or Intel.</li>
+        <li>
+          On-device AI (auto-labeling, thread summaries) downloads its model on first run —
+          a one-time ~3.5&nbsp;GB, checksum-verified fetch. Everything else works immediately.
+        </li>
+        <li>
+          <strong>Intel Macs:</strong> everything works except on-device AI. You can still opt
+          into an external AI provider with your own API key, or run without AI entirely.
+        </li>
+      </ul>
+    </section>
+
+    <section class="requirements">
+      <h2>Updates</h2>
+      <p>
+        NoMail updates itself: it checks for new releases on launch and every six hours,
+        downloads in the background, and installs when you quit. Release notes are in the app’s
+        “What’s new” panel and on the <a href={withBase("/changelog/")}>changelog</a>.
+      </p>
+      <p>
+        Looking for a specific version? All builds are on <a href={ALL_RELEASES}>GitHub&nbsp;Releases</a>.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 720px;
+  }
+
+  .page-head {
+    margin-block: var(--space-8) var(--space-6);
+  }
+
+  .page-head p {
+    color: var(--nm-fg-secondary);
+    font-size: 1.0625rem;
+  }
+
+  .requirements {
+    margin-top: var(--space-7);
+  }
+
+  .requirements h2 {
+    font-size: 1.25rem;
+  }
+
+  .requirements li {
+    margin-block: var(--space-2);
+  }
+
+  .requirements p,
+  .requirements ul {
+    color: var(--nm-fg);
+  }
+</style>

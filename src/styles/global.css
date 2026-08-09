@@ -1,0 +1,268 @@
+/*
+ * NoMail site styles. The --nm-* palette is copied verbatim from the app's
+ * packages/ui/src/tokens.css (Notion's visual language: warm near-monochrome
+ * grays, one blue accent, subtle borders over shadows). The site has no theme
+ * toggle, so the app's data-theme machinery is dropped — prefers-color-scheme
+ * only.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --nm-bg: #ffffff;
+  --nm-bg-sidebar: #f7f7f5;
+  --nm-bg-hover: rgba(0, 0, 0, 0.045);
+  --nm-bg-active: rgba(0, 0, 0, 0.08);
+  --nm-bg-card: #ffffff;
+
+  --nm-fg: #37352f;
+  --nm-fg-secondary: #787774;
+  --nm-fg-faint: #9b9a97;
+
+  --nm-border: rgba(0, 0, 0, 0.09);
+  --nm-border-strong: rgba(0, 0, 0, 0.16);
+
+  --nm-accent: #2383e2;
+  --nm-accent-hover: #0e77d9;
+  --nm-accent-fg: #ffffff;
+
+  --nm-danger: #eb5757;
+
+  --nm-radius-sm: 4px;
+  --nm-radius-md: 6px;
+  --nm-radius-lg: 10px;
+
+  --nm-font-sans:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji",
+    Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  --nm-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Site-only additions */
+  --shot-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  --section-gap: var(--space-9);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nm-bg: #191919;
+    --nm-bg-sidebar: #202020;
+    --nm-bg-hover: rgba(255, 255, 255, 0.055);
+    --nm-bg-active: rgba(255, 255, 255, 0.1);
+    --nm-bg-card: #202020;
+
+    --nm-fg: #d3d3d1;
+    --nm-fg-secondary: #9b9b97;
+    --nm-fg-faint: #6f6f6b;
+
+    --nm-border: rgba(255, 255, 255, 0.094);
+    --nm-border-strong: rgba(255, 255, 255, 0.18);
+
+    --nm-accent-hover: #3b93ea;
+
+    --shot-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (max-width: 800px) {
+  :root {
+    --section-gap: 56px;
+  }
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--nm-bg);
+  color: var(--nm-fg);
+  font-family: var(--nm-font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--nm-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: var(--nm-font-mono);
+  font-size: 0.875em;
+  background: var(--nm-bg-hover);
+  border-radius: var(--nm-radius-sm);
+  padding: 0.1em 0.35em;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+  margin: 0 0 var(--space-4);
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--nm-accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(35, 131, 226, 0.25);
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.section {
+  margin-block: var(--section-gap);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 18px;
+  border-radius: var(--nm-radius-md);
+  font-size: 0.9375rem;
+  font-weight: 550;
+  line-height: 1.3;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn--primary {
+  background: var(--nm-accent);
+  color: var(--nm-accent-fg);
+}
+
+.btn--primary:hover {
+  background: var(--nm-accent-hover);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--nm-fg);
+  border-color: var(--nm-border-strong);
+}
+
+.btn--secondary:hover {
+  background: var(--nm-bg-hover);
+}
+
+/* ---------- Prose (markdown-rendered pages) ---------- */
+
+.prose {
+  max-width: 68ch;
+}
+
+.prose h1 {
+  font-size: 2rem;
+  margin-top: 0;
+}
+
+.prose h2 {
+  font-size: 1.375rem;
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--nm-border);
+}
+
+.prose h3 {
+  font-size: 1.0625rem;
+  margin-top: var(--space-6);
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin-block: var(--space-4);
+}
+
+.prose li {
+  margin-block: var(--space-2);
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9375rem;
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--nm-border);
+}
+
+.prose th {
+  color: var(--nm-fg-secondary);
+  font-weight: 550;
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--space-4);
+  border-inline-start: 3px solid var(--nm-border-strong);
+  color: var(--nm-fg-secondary);
+}

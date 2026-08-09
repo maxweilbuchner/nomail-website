@@ -1,0 +1,103 @@
+---
+import Base from "../layouts/Base.astro";
+import raw from "../content/CHANGELOG.md?raw";
+import { parseChangelog } from "../lib/render-changelog";
+import { ALL_RELEASES } from "../config";
+
+const sections = parseChangelog(raw);
+const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
+const formatDate = (iso: string) => dateFormat.format(new Date(`${iso}T00:00:00Z`));
+---
+
+<Base
+  title="Changelog — NoMail"
+  description="Every NoMail release, newest first — the same notes the in-app updater shows."
+>
+  <div class="container">
+    <header class="page-head">
+      <h1>Changelog</h1>
+      <p>
+        Every release, newest first — the same notes the in-app updater shows. Builds are
+        on <a href={ALL_RELEASES}>GitHub</a>.
+      </p>
+    </header>
+
+    {
+      sections.map((s) => (
+        <section class="release" id={`v${s.version}`}>
+          <header class="release__head">
+            <h2>
+              <a href={`#v${s.version}`}>{s.version}</a>
+            </h2>
+            <time datetime={s.date}>{formatDate(s.date)}</time>
+          </header>
+          <div class="prose" set:html={s.html} />
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    margin-block: var(--space-8) var(--space-7);
+    max-width: 68ch;
+  }
+
+  .page-head p {
+    color: var(--nm-fg-secondary);
+    font-size: 1.0625rem;
+  }
+
+  .release {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 68ch);
+    gap: var(--space-5);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--nm-border);
+  }
+
+  .release__head h2 {
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-1);
+  }
+
+  .release__head a {
+    color: var(--nm-fg);
+  }
+
+  .release__head a:hover {
+    color: var(--nm-accent);
+    text-decoration: none;
+  }
+
+  .release__head time {
+    color: var(--nm-fg-faint);
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .release :global(.prose > :first-child) {
+    margin-top: 0;
+  }
+
+  .release :global(h3) {
+    margin-top: var(--space-5);
+    color: var(--nm-fg-secondary);
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Anchored version scrolls below the sticky header. */
+  .release {
+    scroll-margin-top: 72px;
+  }
+
+  @media (max-width: 800px) {
+    .release {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import { Content as Privacy } from "../content/PRIVACY.md";
+---
+
+<Base
+  title="Privacy Policy — NoMail"
+  description="NoMail runs entirely on your computer: no backend, no accounts system, no servers your mail passes through."
+>
+  <div class="container">
+    <article class="prose privacy">
+      <Privacy />
+    </article>
+  </div>
+</Base>
+
+<style>
+  .privacy {
+    margin-block: var(--space-8);
+  }
+</style>

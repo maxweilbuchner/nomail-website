@@ -1,0 +1,87 @@
+---
+import { DOWNLOAD_ARM64, DOWNLOAD_X64 } from "../config";
+---
+
+<div class="dl">
+  <a
+    class="btn btn--primary dl__primary"
+    id="dl-primary"
+    href={DOWNLOAD_ARM64}
+    data-arm64={DOWNLOAD_ARM64}
+    data-x64={DOWNLOAD_X64}
+  >
+    <span id="dl-primary-label">Download for Apple&nbsp;Silicon</span>
+  </a>
+  <p class="dl__detected" id="dl-detected" hidden>Detected: Intel Mac</p>
+  <p class="dl__alts">
+    Direct downloads: <a href={DOWNLOAD_ARM64}>Apple Silicon</a> · <a href={DOWNLOAD_X64}>Intel</a>
+  </p>
+</div>
+
+<script>
+  // Arch detection per the packaging doc's recipe: UA sniffing cannot tell
+  // Apple Silicon from Intel, so use userAgentData high-entropy values on
+  // Chromium, the WebGL renderer string as a heuristic elsewhere, and default
+  // to arm64 when inconclusive. Both links stay visible either way — this
+  // only swaps which one is the big button.
+  async function detectArch(): Promise<"arm64" | "x64"> {
+    try {
+      const uad = (navigator as any).userAgentData;
+      if (uad?.getHighEntropyValues) {
+        const { architecture } = await uad.getHighEntropyValues(["architecture"]);
+        if (architecture === "x86") return "x64";
+        if (architecture === "arm") return "arm64";
+      }
+    } catch {
+      /* fall through to the WebGL heuristic */
+    }
+    try {
+      const gl = document.createElement("canvas").getContext("webgl");
+      const ext = gl?.getExtension("WEBGL_debug_renderer_info");
+      const renderer = String(
+        ext ? gl!.getParameter(ext.UNMASKED_RENDERER_WEBGL) : (gl?.getParameter(gl.RENDERER) ?? ""),
+      );
+      if (/Intel|AMD|Radeon/i.test(renderer)) return "x64";
+      if (/Apple/i.test(renderer)) return "arm64";
+    } catch {
+      /* inconclusive */
+    }
+    return "arm64";
+  }
+
+  detectArch().then((arch) => {
+    if (arch !== "x64") return;
+    const primary = document.getElementById("dl-primary") as HTMLAnchorElement | null;
+    const label = document.getElementById("dl-primary-label");
+    const detected = document.getElementById("dl-detected");
+    if (primary?.dataset.x64) primary.href = primary.dataset.x64;
+    if (label) label.textContent = "Download for Intel";
+    if (detected) detected.hidden = false;
+  });
+</script>
+
+<style>
+  .dl {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .dl__primary {
+    font-size: 1.0625rem;
+    padding: 13px 26px;
+  }
+
+  .dl__detected {
+    margin: 0;
+    color: var(--nm-fg-faint);
+    font-size: 0.875rem;
+  }
+
+  .dl__alts {
+    margin: 0;
+    color: var(--nm-fg-secondary);
+    font-size: 0.9375rem;
+  }
+</style>

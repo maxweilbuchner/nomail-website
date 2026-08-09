@@ -1,0 +1,67 @@
+---
+import { withBase } from "../lib/url";
+import { ALL_RELEASES } from "../config";
+
+const nav = [
+  { href: withBase("/download/"), label: "Download" },
+  { href: withBase("/changelog/"), label: "Changelog" },
+  { href: withBase("/support/"), label: "Support" },
+  { href: withBase("/privacy/"), label: "Privacy" },
+  { href: withBase("/imprint/"), label: "Imprint" },
+  { href: ALL_RELEASES, label: "GitHub" },
+];
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <nav class="footer__nav" aria-label="Footer">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <p class="footer__legal">
+      © 2026 NoMail · <a href="https://fsl.software">Fair Source, FSL-1.1-ALv2</a> — each release
+      becomes Apache 2.0 two years after it ships.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--section-gap);
+    border-top: 1px solid var(--nm-border);
+    padding-block: var(--space-6);
+    background: var(--nm-bg-sidebar);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4) var(--space-5);
+  }
+
+  .footer__nav a {
+    color: var(--nm-fg-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .footer__nav a:hover {
+    color: var(--nm-fg);
+    text-decoration: none;
+  }
+
+  .footer__legal {
+    margin: 0;
+    color: var(--nm-fg-faint);
+    font-size: 0.875rem;
+  }
+
+  .footer__legal a {
+    color: var(--nm-fg-faint);
+    text-decoration: underline;
+  }
+</style>

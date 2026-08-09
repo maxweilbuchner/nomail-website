@@ -1,0 +1,318 @@
+---
+import Base from "../layouts/Base.astro";
+import Shot from "../components/Shot.astro";
+import { withBase } from "../lib/url";
+
+import heroLight from "../assets/shots/hero-light.png";
+import heroDark from "../assets/shots/hero-dark.png";
+import splitLight from "../assets/shots/split-skip-light.png";
+import composeLight from "../assets/shots/compose-rich-light.png";
+import composeDark from "../assets/shots/compose-rich-dark.png";
+import menuLight from "../assets/shots/menu-light.png";
+import inviteLight from "../assets/shots/invite-card-light.png";
+import codeLight from "../assets/shots/login-code-light.png";
+
+const also = [
+  ["Instant search", "Local full-text search merged with server results — live while you triage."],
+  ["Multi-account", "Gmail, Outlook, Fastmail, iCloud and IMAP side by side, with a combined inbox."],
+  ["Snooze & reminders", "Snooze threads, get reminded when nobody replies — armed right from the composer."],
+  ["Snippets", "Reusable text blocks with {{variables}} that fill in as you insert them."],
+  ["Undo everything", "Optimistic writes through a durable outbox — undo-send included."],
+  ["One-click unsubscribe", "RFC 8058 unsubscribe straight from the list row."],
+] as const;
+
+const trust = [
+  {
+    title: "No backend",
+    body: "NoMail has no servers. Your mail moves between your Mac and your provider — nowhere else.",
+  },
+  {
+    title: "On-device AI",
+    body: "Auto-labels that learn from how you file mail and thread summaries run a bundled local model. Nothing leaves the machine unless you opt into an external provider with your own key.",
+  },
+  {
+    title: "Signed & notarized",
+    body: "Developer ID signed, notarized by Apple, and auto-updating — release notes shown in-app.",
+  },
+  {
+    title: "Fair Source",
+    body: "Licensed FSL-1.1-ALv2: read, run, and modify the code — and each release becomes plain Apache 2.0 two years after it ships.",
+  },
+] as const;
+---
+
+<Base>
+  <div class="container">
+    <section class="hero">
+      <h1>Your inbox is a database.</h1>
+      <p class="hero__sub">
+        NoMail is a keyboard-first, local-first mail client for macOS — custom views with
+        filters, grouping, and sorting, a Notion-style block editor for composing, and
+        on-device AI that never sends your mail anywhere.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={withBase("/download/")}>Download for macOS</a>
+        <a class="btn btn--secondary" href={withBase("/changelog/")}>What’s new</a>
+      </div>
+      <div class="hero__shot">
+        <Shot
+          light={heroLight}
+          dark={heroDark}
+          alt="NoMail — split inbox with pinned sections and an open conversation carrying a calendar invite"
+          priority
+        />
+      </div>
+    </section>
+
+    <section class="feature section">
+      <div class="feature__text">
+        <h2>Views, not folders</h2>
+        <p>
+          Filter, group, and sort your mail the way you'd query a database. Save any result as
+          a named view, pin it as a section of a split inbox, and let low-priority mail skip
+          the inbox entirely. A built-in Follow-ups view keeps everything still waiting on a
+          reply in one place.
+        </p>
+      </div>
+      <Shot light={splitLight} alt="A split inbox: pinned Team section above the day-grouped stream, with labels and an extracted sign-in code on the rows" />
+    </section>
+
+    <section class="feature feature--flip section">
+      <div class="feature__text">
+        <h2>Compose like it’s Notion</h2>
+        <p>
+          A real block editor: headings, to-do lists, quotes, code, colors — with markdown
+          shortcuts and a slash menu. Snippets with variables, signatures, scheduled send, and
+          undo-send. Composers pop out into their own windows and back.
+        </p>
+      </div>
+      <Shot light={composeLight} dark={composeDark} alt="The pop-out composer with a rich draft: heading, bold and colored text, a checked to-do list, a quote, and a code block" />
+    </section>
+
+    <section class="feature section">
+      <div class="feature__text">
+        <h2>Keyboard-first, wait-free</h2>
+        <p>
+          Every action has a shortcut, and everything is reachable from the ⌘K command menu.
+          Because NoMail is local-first, nothing waits on the network: triage happens against
+          your local database in milliseconds and syncs behind you — offline included.
+        </p>
+      </div>
+      <Shot light={menuLight} alt="The ⌘K command menu open over the inbox, listing actions with their shortcuts" />
+    </section>
+
+    <section class="duo section">
+      <div class="duo__item">
+        <h3>Meetings, handled in-line</h3>
+        <p>
+          Calendar invites render as cards in the thread. RSVP from the card and the event
+          lands in your Google Calendar.
+        </p>
+        <Shot light={inviteLight} alt="A calendar invite card in a thread, with Yes / Maybe / No RSVP buttons" />
+      </div>
+      <div class="duo__item">
+        <h3>Sign-in codes, one click</h3>
+        <p>
+          Verification codes are detected and surfaced on the list row and in the reading
+          pane — copied with one click, before the sender’s email even loads.
+        </p>
+        <Shot light={codeLight} alt="A verification mail with the login code extracted into a Copy pill above the message" />
+      </div>
+    </section>
+
+    <section class="also section">
+      <h2>And the rest of a serious mail client</h2>
+      <ul class="also__grid">
+        {
+          also.map(([title, body]) => (
+            <li>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="trust section">
+      <h2>Built to be trusted with your mail</h2>
+      <div class="trust__grid">
+        {
+          trust.map((card) => (
+            <article class="trust__card">
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="cta section">
+      <h2>Try NoMail</h2>
+      <p>Free download for macOS — Apple Silicon and Intel. Signed, notarized, auto-updating.</p>
+      <a class="btn btn--primary" href={withBase("/download/")}>Download for macOS</a>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .hero {
+    text-align: center;
+    padding-top: var(--space-8);
+  }
+
+  .hero h1 {
+    margin-inline: auto;
+    max-width: 16ch;
+  }
+
+  .hero__sub {
+    margin: var(--space-4) auto 0;
+    max-width: 56ch;
+    color: var(--nm-fg-secondary);
+    font-size: 1.125rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .hero__shot {
+    margin-top: var(--space-8);
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .feature--flip .feature__text {
+    order: 2;
+  }
+
+  .feature__text h2 {
+    margin-bottom: var(--space-3);
+  }
+
+  .feature__text p {
+    color: var(--nm-fg-secondary);
+    margin: 0;
+  }
+
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .duo__item h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .duo__item p {
+    color: var(--nm-fg-secondary);
+    margin: 0 0 var(--space-4);
+    min-height: 3lh;
+  }
+
+  .also h2,
+  .trust h2 {
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .also__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5) var(--space-6);
+  }
+
+  .also__grid h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .also__grid p {
+    margin: 0;
+    color: var(--nm-fg-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .trust__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+
+  .trust__card {
+    border: 1px solid var(--nm-border);
+    border-radius: var(--nm-radius-lg);
+    background: var(--nm-bg-card);
+    padding: var(--space-5);
+  }
+
+  .trust__card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .trust__card p {
+    margin: 0;
+    color: var(--nm-fg-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .cta {
+    text-align: center;
+    padding: var(--space-8) var(--space-5);
+    border: 1px solid var(--nm-border);
+    border-radius: var(--nm-radius-lg);
+    background: var(--nm-bg-sidebar);
+  }
+
+  .cta p {
+    color: var(--nm-fg-secondary);
+    margin: var(--space-3) 0 var(--space-5);
+  }
+
+  @media (max-width: 800px) {
+    .feature,
+    .duo,
+    .trust__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .also__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .feature--flip .feature__text {
+      order: 0;
+    }
+
+    .duo__item p {
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .also__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

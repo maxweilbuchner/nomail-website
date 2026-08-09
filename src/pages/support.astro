@@ -1,0 +1,96 @@
+---
+import Base from "../layouts/Base.astro";
+import { CONTACT_EMAIL, ISSUES_URL, MIN_MACOS } from "../config";
+import { withBase } from "../lib/url";
+
+const faq = [
+  {
+    q: "How do updates work?",
+    a: `NoMail updates itself in-app: it checks for new releases on launch and every six hours, downloads in the background, and installs when you quit. What changed is always on the <a href="${withBase("/changelog/")}">changelog</a>.`,
+  },
+  {
+    q: "Which email providers are supported?",
+    a: "Gmail (personal and Google Workspace), Microsoft (Outlook.com and Hotmail), Fastmail and other JMAP servers, and iCloud or any generic IMAP server.",
+  },
+  {
+    q: "Why is there no on-device AI on Intel Macs?",
+    a: "The bundled local model ships as an Apple Silicon binary only. On Intel, everything else works — and you can still opt into an external AI provider with your own API key, or run without AI entirely.",
+  },
+  {
+    q: "Where is my data stored?",
+    a: `On your Mac, and nowhere else: mail lives in a local SQLite database, and NoMail has no backend your mail passes through. The <a href="${withBase("/privacy/")}">privacy policy</a> has the full picture.`,
+  },
+  {
+    q: "Google shows an “unverified app” warning when I sign in — is that expected?",
+    a: "Yes, for now. NoMail talks directly to Gmail with credentials you grant it; while Google’s verification of the app is still in progress, the consent screen shows that warning. Your mail still goes only between your Mac and Google.",
+  },
+];
+---
+
+<Base
+  title="Support — NoMail"
+  description="Get help with NoMail: frequently asked questions, bug reports, and contact."
+>
+  <div class="container narrow">
+    <header class="page-head">
+      <h1>Support</h1>
+      <p>
+        Found a bug or missing something? <a href={ISSUES_URL}>Open an issue on GitHub</a> — or
+        write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+    </header>
+
+    <section>
+      <h2>Frequently asked questions</h2>
+      <dl class="faq">
+        {
+          faq.map((item) => (
+            <div class="faq__item">
+              <dt>{item.q}</dt>
+              <dd set:html={item.a} />
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .narrow {
+    max-width: 720px;
+  }
+
+  .page-head {
+    margin-block: var(--space-8) var(--space-7);
+  }
+
+  .page-head p {
+    color: var(--nm-fg-secondary);
+    font-size: 1.0625rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .faq {
+    margin: 0;
+  }
+
+  .faq__item {
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--nm-border);
+  }
+
+  .faq__item dt {
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+
+  .faq__item dd {
+    margin: 0;
+    color: var(--nm-fg-secondary);
+  }
+</style>
