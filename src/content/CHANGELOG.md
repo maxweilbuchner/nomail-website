@@ -11,6 +11,25 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.7 — 2026-08-10
+
+- Login-code detection no longer mistakes tracking-link gibberish for a code:
+  URLs are ignored entirely when scanning for one-time codes, so newsletters
+  with "use the code …" wording next to tracking links stop offering a bogus
+  code pill. (#382)
+- Tips that teach a setting now carry an **Open settings** button that jumps
+  straight to the setting's row and highlights it — including the undo-send
+  tip, which previously offered no way to change the window it quoted. (#381)
+- Messages with fixed-width layouts — Gmail signatures, wide newsletter
+  templates — now fit the reading pane: over-wide blocks shrink and their text
+  wraps instead of forcing horizontal (and a spurious vertical) scrollbars on
+  the message. (#375)
+- Attachments sent from Gmail's composer now show up: the attachment row, the
+  thread list's paperclip, and forwarding all recognize files that carry a
+  Content-ID without being used inline — previously such attachments were
+  invisible and silently dropped from forwards. Already-synced mail is fixed on
+  the next launch. (#374)
+
 ## 0.7.6 — 2026-08-10
 
 - Microsoft accounts now sync attachments: attached files and inline images
