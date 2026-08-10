@@ -11,6 +11,16 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.5 — 2026-08-10
+
+- Views pinned as Inbox sections now also split the **All inboxes** stream —
+  their sections sit at the top of the merged list, labeled with the account.
+  Pinned views also appear under **Favourites** in the combined sidebar;
+  unpinning removes both. (#371)
+- Thread-list checkboxes now line up with the header's select-all box, and row
+  content sits a touch further from the list edges — clear of the row
+  highlight's rounded corners.
+
 ## 0.7.4 — 2026-08-09
 
 - Hovering a conversation now highlights it with a rounded panel inset from
