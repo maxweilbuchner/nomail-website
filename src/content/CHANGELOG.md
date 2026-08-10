@@ -11,6 +11,17 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.6 — 2026-08-10
+
+- Microsoft accounts now sync attachments: attached files and inline images
+  show up on their messages and can be opened and saved — previously every
+  attachment on an Outlook/Hotmail account was invisible. (#378)
+- Clicking a new-mail notification now opens the announced conversation in a
+  view that contains it, instead of just focusing the app. Digest notifications
+  ("N new messages") open the newest thread of the batch, and in **All
+  inboxes** a notification click no longer switches you to a single account.
+  (#372)
+
 ## 0.7.5 — 2026-08-10
 
 - Views pinned as Inbox sections now also split the **All inboxes** stream —
