@@ -106,4 +106,4 @@ change in the release notes for the version that carries it.
 ## Contact
 
 Questions about this policy or about how NoMail handles your data:
-**<!-- TODO: contact address on the app's own domain, e.g. privacy@<domain> -->**
+**privacy@nomailapp.com**
