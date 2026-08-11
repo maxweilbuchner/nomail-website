@@ -2,10 +2,9 @@
 import Base from "../layouts/Base.astro";
 import { CONTACT_EMAIL } from "../config";
 
-// Placeholders render as [[…]] on purpose — an unfilled deploy is visibly
-// unfinished. Fill from src/config.ts and the fields below.
+// § 5 ECG also wants the street address; omitted until there is a publishable
+// one (#408). The email address is the working contact meanwhile.
 const FULL_NAME = "Maximilian Weilbuchner";
-const STREET = "[[STREET AND NUMBER]]";
 const CITY = "1180 Wien";
 ---
 
@@ -18,7 +17,6 @@ const CITY = "1180 Wien";
       <h2>Media owner and publisher</h2>
       <p>
         {FULL_NAME}<br />
-        {STREET}<br />
         {CITY}<br />
         Austria
       </p>
