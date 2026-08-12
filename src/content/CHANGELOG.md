@@ -849,7 +849,7 @@ welcome as history here and stripped from everything users see.
 
 ### Added
 
-- Notion-style rich-text compose editor: headings, lists, to-dos, quotes, code,
+- Markdown-style rich-text compose editor: headings, lists, to-dos, quotes, code,
   and a formatting bubble menu (#98)
 - "Not spam" action in the Spam view (#95)
 

@@ -1,7 +1,7 @@
 /*
  * NoMail site styles. The --nm-* palette is copied verbatim from the app's
- * packages/ui/src/tokens.css (Notion's visual language: warm near-monochrome
- * grays, one blue accent, subtle borders over shadows). The site has no theme
+ * packages/ui/src/tokens.css (warm near-monochrome grays, one blue accent,
+ * subtle borders over shadows). The site has no theme
  * toggle, so the app's data-theme machinery is dropped — prefers-color-scheme
  * only.
  */
