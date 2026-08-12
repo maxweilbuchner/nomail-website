@@ -1,0 +1,42 @@
+# NoMail
+
+> A keyboard-first, local-first email client for macOS. Mail lives in a local
+> SQLite database on the user's Mac; NoMail has no backend and no servers that
+> mail passes through. Free, Developer ID signed, notarized, and auto-updating.
+> Licensed FSL-1.1-ALv2 (Fair Source) — each release becomes Apache 2.0 two
+> years after it ships.
+
+Not to be confused with the several unrelated products that share the name;
+this one is the macOS email client published at https://nomailapp.com.
+
+## Product
+
+- Views, not folders: filter, group, and sort mail like a database query, save
+  the result as a named view, pin views as sections of a split inbox.
+- Compose in Markdown: a block editor with headings, lists, to-dos, quotes,
+  code blocks, snippets with variables, signatures, scheduled send, undo-send.
+- On-device AI: auto-labels and thread summaries run a bundled local model on
+  Apple Silicon. Nothing leaves the machine unless the user opts into an
+  external provider with their own API key.
+- Providers: Gmail and Google Workspace, Outlook.com and Hotmail, Fastmail and
+  other JMAP servers, iCloud, and generic IMAP — side by side, combined inbox.
+- Also: instant local full-text search, snooze and follow-up reminders,
+  calendar invite cards with RSVP, extracted sign-in codes, RFC 8058
+  one-click unsubscribe, ⌘K command menu.
+- Requires macOS 12 or later. On Intel Macs everything works except on-device
+  AI, which ships as an Apple Silicon binary.
+
+## Pages
+
+- [Home](https://nomailapp.com/): what NoMail is, with screenshots.
+- [Download](https://nomailapp.com/download/): free builds for Apple Silicon
+  and Intel, requirements, and how updates work.
+- [Changelog](https://nomailapp.com/changelog/): every release, newest first.
+- [Support](https://nomailapp.com/support/): FAQ and contact.
+- [Privacy policy](https://nomailapp.com/privacy/): what is stored and where.
+- [Imprint](https://nomailapp.com/imprint/): legal disclosure.
+
+## Elsewhere
+
+- [Releases and issue tracker](https://github.com/maxweilbuchner/nomail-releases)
+- Contact: hello@nomailapp.com
