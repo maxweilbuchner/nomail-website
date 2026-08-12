@@ -11,6 +11,37 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.8 — 2026-08-12
+
+- Emails designed as a centered card — most modern newsletters and
+  notification mails — now render at their intended width instead of
+  stretching across the whole reading pane. (#401)
+- Views can now filter on recipients: a **To** condition (contains / doesn't
+  contain, matching name or address) joins From in the filter editor. (#400)
+- Settings export now includes each account's custom color and label, and
+  importing restores them on any install where the same account is
+  connected. (#397)
+- Closing the last window now truly leaves NoMail running in the menu bar —
+  the background new-mail check no longer reopens the inbox on its own. (#395)
+- Accounts can be renamed: click the label on an account's card under
+  Settings › Accounts to edit it — the new name shows in the switcher, the
+  combined inbox and account pickers; clearing it restores the automatic
+  domain label. (#394)
+- Removing a view's filtering label from a selected conversation now drops it
+  from the selection: the bulk bar and select-all checkbox count only visible
+  conversations, and bulk actions no longer target mail that left the view.
+  (#391)
+- New **Density** setting under Settings › Appearance: **Compact** tightens
+  conversation rows, the sidebar and the surrounding chrome to fit more mail
+  on screen. (#390)
+- Text sizes across the app now follow one five-step scale: thread-list
+  titles and senders are a touch larger, and menus, toolbars and chips align
+  on consistent sizes instead of near-identical half-pixel variants. (#102)
+- Warning banners, follow-up chips and status marks now share one consistent
+  amber recipe in both themes, success indicators one green, and floating
+  panels a unified three-level shadow scale — small visual inconsistencies
+  that had crept in across the app are gone. (#102)
+
 ## 0.7.7 — 2026-08-10
 
 - Login-code detection no longer mistakes tracking-link gibberish for a code:
