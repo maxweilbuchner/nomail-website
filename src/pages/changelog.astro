@@ -27,7 +27,9 @@ const formatDate = (iso: string) => dateFormat.format(new Date(`${iso}T00:00:00Z
         <section class="release" id={`v${s.version}`}>
           <header class="release__head">
             <h2>
-              <a href={`#v${s.version}`}>{s.version}</a>
+              {/* One line: Astro drops the whitespace node between elements
+                  on separate lines, which would concatenate the words. */}
+              <a href={`#v${s.version}`}><span class="release__brand">NoMail</span> {s.version}</a>
             </h2>
             <time datetime={s.date}>{formatDate(s.date)}</time>
           </header>
@@ -69,6 +71,13 @@ const formatDate = (iso: string) => dateFormat.format(new Date(`${iso}T00:00:00Z
   .release__head a:hover {
     color: var(--nm-accent);
     text-decoration: none;
+  }
+
+  /* The version stays the loud part; the name is there so the heading reads as
+     "NoMail 0.7.8" — which is what someone on a given release searches for. */
+  .release__brand {
+    color: var(--nm-fg-faint);
+    font-weight: 500;
   }
 
   .release__head time {

@@ -24,14 +24,17 @@ const also = [
   ["One-click unsubscribe", "RFC 8058 unsubscribe straight from the list row."],
 ] as const;
 
+// `body` is authored markup, not user input — it carries the only in-body
+// links the homepage gives Privacy and Support, which otherwise hang off the
+// footer alone.
 const trust = [
   {
     title: "No backend",
-    body: "NoMail has no servers. Your mail moves between your Mac and your provider — nowhere else.",
+    body: `NoMail has no servers. Your mail moves between your Mac and your provider — nowhere else, as the <a href="${withBase("/privacy/")}">privacy policy</a> spells out.`,
   },
   {
     title: "On-device AI",
-    body: "Auto-labels that learn from how you file mail and thread summaries run a bundled local model. Nothing leaves the machine unless you opt into an external provider with your own key.",
+    body: `Auto-labels that learn from how you file mail and thread summaries run a bundled local model. Nothing leaves the machine unless you opt into an external provider with your own key — the <a href="${withBase("/support/")}">FAQ</a> covers the details.`,
   },
   {
     title: "Signed & notarized",
@@ -159,7 +162,7 @@ const schema = graph(
           trust.map((card) => (
             <article class="trust__card">
               <h3>{card.title}</h3>
-              <p>{card.body}</p>
+              <p set:html={card.body} />
             </article>
           ))
         }
