@@ -8,23 +8,45 @@ interface Props {
   alt: string;
   /** Above-the-fold shots load eagerly with high fetch priority. */
   priority?: boolean;
+  /** CSS width of the slot this shot fills, for picking a srcset candidate.
+   *  Defaults to the full content column (the hero). */
+  sizes?: string;
 }
 
-const { light, dark, alt, priority = false } = Astro.props;
+const { light, dark, alt, priority = false, sizes = "(max-width: 1120px) 100vw, 1040px" } =
+  Astro.props;
 
-// Shots are captured at 2x retina; serve as optimized webp.
-const l = await getImage({ src: light, format: "webp" });
-const d = dark ? await getImage({ src: dark, format: "webp" }) : null;
+// Shots are captured at 2720px wide for retina; without a width set every
+// visitor downloads all of it, including a phone that can show a fifth of it.
+// The ladder tops out at the source width — Astro never upscales.
+const WIDTHS = [640, 1040, 1440, 2080, 2720];
+
+const optimize = (src: ImageMetadata) => getImage({ src, format: "webp", widths: WIDTHS, sizes });
+
+const l = await optimize(light);
+const d = dark ? await optimize(dark) : null;
 ---
 
 <figure class="shot">
   <picture>
-    {d && <source media="(prefers-color-scheme: dark)" srcset={d.src} />}
+    {
+      d && (
+        <source
+          media="(prefers-color-scheme: dark)"
+          srcset={d.srcSet.attribute}
+          sizes={sizes}
+          width={dark!.width}
+          height={dark!.height}
+        />
+      )
+    }
     <img
       src={l.src}
+      srcset={l.srcSet.attribute}
+      sizes={sizes}
       alt={alt}
-      width={l.attributes.width}
-      height={l.attributes.height}
+      width={light.width}
+      height={light.height}
       loading={priority ? "eager" : "lazy"}
       fetchpriority={priority ? "high" : "auto"}
       decoding="async"

@@ -43,6 +43,11 @@ const trust = [
   },
 ] as const;
 
+// Slot widths inside the 1080px container, so each shot picks a srcset
+// candidate for the box it actually fills rather than the whole page.
+const FEATURE_SIZES = "(max-width: 800px) 100vw, 580px";
+const DUO_SIZES = "(max-width: 800px) 100vw, 500px";
+
 // The advertised version tracks the newest changelog entry, which the release
 // pipeline syncs — so it never goes stale by hand.
 const latest = parseChangelog(rawChangelog)[0];
@@ -86,7 +91,7 @@ const schema = graph(
           reply in one place.
         </p>
       </div>
-      <Shot light={splitLight} alt="A split inbox: pinned Team section above the day-grouped stream, with labels and an extracted sign-in code on the rows" />
+      <Shot light={splitLight} sizes={FEATURE_SIZES} alt="A split inbox: pinned Team section above the day-grouped stream, with labels and an extracted sign-in code on the rows" />
     </section>
 
     <section class="feature feature--flip section">
@@ -99,7 +104,7 @@ const schema = graph(
           their own windows and back.
         </p>
       </div>
-      <Shot light={composeLight} dark={composeDark} alt="The pop-out composer with a rich draft: heading, bold and colored text, a checked to-do list, a quote, and a code block" />
+      <Shot light={composeLight} dark={composeDark} sizes={FEATURE_SIZES} alt="The pop-out composer with a rich draft: heading, bold and colored text, a checked to-do list, a quote, and a code block" />
     </section>
 
     <section class="feature section">
@@ -111,7 +116,7 @@ const schema = graph(
           your local database in milliseconds and syncs behind you — offline included.
         </p>
       </div>
-      <Shot light={menuLight} alt="The ⌘K command menu open over the inbox, listing actions with their shortcuts" />
+      <Shot light={menuLight} sizes={FEATURE_SIZES} alt="The ⌘K command menu open over the inbox, listing actions with their shortcuts" />
     </section>
 
     <section class="duo section">
@@ -121,7 +126,7 @@ const schema = graph(
           Calendar invites render as cards in the thread. RSVP from the card and the event
           lands in your Google Calendar.
         </p>
-        <Shot light={inviteLight} alt="A calendar invite card in a thread, with Yes / Maybe / No RSVP buttons" />
+        <Shot light={inviteLight} sizes={DUO_SIZES} alt="A calendar invite card in a thread, with Yes / Maybe / No RSVP buttons" />
       </div>
       <div class="duo__item">
         <h3>Sign-in codes, one click</h3>
@@ -129,7 +134,7 @@ const schema = graph(
           Verification codes are detected and surfaced on the list row and in the reading
           pane — copied with one click, before the sender’s email even loads.
         </p>
-        <Shot light={codeLight} alt="A verification mail with the login code extracted into a Copy pill above the message" />
+        <Shot light={codeLight} sizes={DUO_SIZES} alt="A verification mail with the login code extracted into a Copy pill above the message" />
       </div>
     </section>
 
