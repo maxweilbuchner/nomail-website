@@ -9,9 +9,13 @@ interface Props {
   description?: string;
 }
 
+// The title tag is a search result, not a headline: it names the category and
+// the platform, because "your inbox is a database" is nothing anyone types.
+// The tagline still leads on the page itself, in the H1. Keep descriptions
+// under ~155 characters — past that Google truncates the snippet.
 const {
-  title = "NoMail — Your inbox is a database",
-  description = "A keyboard-first, local-first mail client for macOS: custom views with filters, grouping, and sorting, a Markdown block editor for composing, and on-device AI that never sends your mail anywhere.",
+  title = "NoMail — a keyboard-first, local-first email client for Mac",
+  description = "A keyboard-first, local-first email client for macOS. Custom views, a Markdown composer, and on-device AI that never sends your mail anywhere.",
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
