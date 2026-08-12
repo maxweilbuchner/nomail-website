@@ -2,6 +2,9 @@
 import Base from "../layouts/Base.astro";
 import Shot from "../components/Shot.astro";
 import { withBase } from "../lib/url";
+import rawChangelog from "../content/CHANGELOG.md?raw";
+import { parseChangelog } from "../lib/render-changelog";
+import { graph, organization, website, softwareApplication } from "../lib/schema";
 
 import heroLight from "../assets/shots/hero-light.png";
 import heroDark from "../assets/shots/hero-dark.png";
@@ -39,9 +42,18 @@ const trust = [
     body: "Licensed FSL-1.1-ALv2: read, run, and modify the code — and each release becomes plain Apache 2.0 two years after it ships.",
   },
 ] as const;
+
+// The advertised version tracks the newest changelog entry, which the release
+// pipeline syncs — so it never goes stale by hand.
+const latest = parseChangelog(rawChangelog)[0];
+const schema = graph(
+  organization(),
+  website(),
+  softwareApplication(latest?.version, latest?.date),
+);
 ---
 
-<Base>
+<Base schema={schema}>
   <div class="container">
     <section class="hero">
       <h1>Your inbox is a database.</h1>

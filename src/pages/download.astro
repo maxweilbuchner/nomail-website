@@ -3,11 +3,18 @@ import Base from "../layouts/Base.astro";
 import DownloadButtons from "../components/DownloadButtons.astro";
 import { ALL_RELEASES, MIN_MACOS } from "../config";
 import { withBase } from "../lib/url";
+import rawChangelog from "../content/CHANGELOG.md?raw";
+import { parseChangelog } from "../lib/render-changelog";
+import { graph, organization, softwareApplication } from "../lib/schema";
+
+const latest = parseChangelog(rawChangelog)[0];
+const schema = graph(organization(), softwareApplication(latest?.version, latest?.date));
 ---
 
 <Base
   title="Download NoMail — free email client for macOS"
   description="Download NoMail, the local-first email client for macOS. Free, signed, notarized, and auto-updating — for Apple Silicon and Intel Macs."
+  schema={schema}
 >
   <div class="container narrow">
     <header class="page-head">

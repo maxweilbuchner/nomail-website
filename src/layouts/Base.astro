@@ -7,6 +7,8 @@ import { withBase } from "../lib/url";
 interface Props {
   title?: string;
   description?: string;
+  /** A JSON-LD `@graph` document — build it with the helpers in lib/schema. */
+  schema?: object;
 }
 
 // The title tag is a search result, not a headline: it names the category and
@@ -16,6 +18,7 @@ interface Props {
 const {
   title = "NoMail — a keyboard-first, local-first email client for Mac",
   description = "A keyboard-first, local-first email client for macOS. Custom views, a Markdown composer, and on-device AI that never sends your mail anywhere.",
+  schema,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -38,6 +41,7 @@ const ogImage = new URL(withBase("/og.png"), Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
   <body>
     <Header />

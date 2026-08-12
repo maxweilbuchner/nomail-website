@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { CONTACT_EMAIL, ISSUES_URL, MIN_MACOS } from "../config";
 import { withBase } from "../lib/url";
+import { graph, organization, faqPage } from "../lib/schema";
 
 const faq = [
   {
@@ -25,11 +26,14 @@ const faq = [
     a: "Yes, for now. NoMail talks directly to Gmail with credentials you grant it; while Google’s verification of the app is still in progress, the consent screen shows that warning. Your mail still goes only between your Mac and Google.",
   },
 ];
+
+const schema = graph(organization(), faqPage(faq));
 ---
 
 <Base
   title="NoMail Support — FAQ, providers, and contact"
   description="Help with NoMail, the macOS email client: how updates work, which providers are supported, where your mail is stored, and how to report a bug."
+  schema={schema}
 >
   <div class="container narrow">
     <header class="page-head">
