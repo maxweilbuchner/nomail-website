@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { CONTACT_EMAIL, ISSUES_URL, MIN_MACOS } from "../config";
+import { CONTACT_EMAIL, ISSUES_URL, MIN_MACOS, SPONSORS_CARD, SPONSORS_URL } from "../config";
 import { withBase } from "../lib/url";
 import { graph, organization, faqPage } from "../lib/schema";
 
@@ -57,6 +57,32 @@ const schema = graph(organization(), faqPage(faq));
         }
       </dl>
     </section>
+
+    <section class="sponsor">
+      <h2>Sponsor NoMail</h2>
+      <p>
+        NoMail is free, and stays that way. Some of what keeps it running isn’t: Google
+        requires an independent annual security assessment before any app may connect to
+        Gmail, and code signing and notarization carry their own yearly costs. Sponsorship
+        goes straight at those bills — no features move behind a paywall.
+      </p>
+      {
+        SPONSORS_CARD ? (
+          <iframe
+            class="sponsor__card"
+            src={`${SPONSORS_URL}/card`}
+            title="Sponsor NoMail on GitHub"
+            width="600"
+            height="225"
+            loading="lazy"
+          />
+        ) : (
+          <p>
+            <a href={SPONSORS_URL}>Sponsor NoMail on GitHub</a>
+          </p>
+        )
+      }
+    </section>
   </div>
 </Base>
 
@@ -96,5 +122,24 @@ const schema = graph(organization(), faqPage(faq));
   .faq__item dd {
     margin: 0;
     color: var(--nm-fg-secondary);
+  }
+
+  .sponsor {
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--nm-border);
+  }
+
+  .sponsor p {
+    color: var(--nm-fg-secondary);
+  }
+
+  /* GitHub renders the card light-only; color-scheme keeps it from inheriting
+     a dark UA scheme it doesn't paint for. */
+  .sponsor__card {
+    margin-top: var(--space-5);
+    border: 0;
+    max-width: 100%;
+    color-scheme: light;
   }
 </style>

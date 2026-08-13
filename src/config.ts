@@ -16,3 +16,9 @@ export const MIN_MACOS = "macOS 12";
 // Public contact address (referenced by imprint + support). Forwards to the
 // maintainer inbox via Cloudflare Email Routing; privacy@ is the policy's own.
 export const CONTACT_EMAIL = "hello@nomailapp.com";
+
+// GitHub Sponsors. The goal card at /card only exists once the listing has been
+// approved and made public — embedding it before that frames GitHub's 404 page.
+// SPONSORS_CARD stays false until then; the section renders as a plain link.
+export const SPONSORS_URL = "https://github.com/sponsors/maxweilbuchner";
+export const SPONSORS_CARD = false;
