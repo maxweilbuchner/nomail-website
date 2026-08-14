@@ -11,6 +11,98 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.9 — 2026-08-14
+
+- The composer's `/` menu now stays fully inside the window: near the bottom of
+  a draft it opens above the caret instead of running off-screen, and in a
+  window too short for the whole list it scrolls. (#447)
+
+- The Inbox no longer starts with an **Unread** section above the date groups.
+  Every view now lists mail newest-first, so a conversation keeps its place in
+  the list when it is marked read. The **Unread first** chip in the toolbar
+  still turns the section on — pick it and **Update view** to keep it — and
+  inboxes that already saved that choice are unchanged. (#445)
+
+- Emails that ask for a font your Mac doesn't have now read in NoMail's own
+  sans instead of dropping to a serif typewriter face. Notification mail from
+  Google and other design-system senders styles its headings this way, and the
+  heading came out looking nothing like the text around it. Printed
+  conversations get the same treatment. (#441)
+
+- **Sync all mail** now paces itself against Gmail's limits instead of running
+  into them. On a large mailbox the download could stall partway through and
+  leave the account showing **Connection error**; it now slows down when Gmail
+  asks it to and picks up where it left off. (#449)
+
+- Archiving or trashing the conversation you are reading now closes it and
+  returns you to the list, instead of opening the next one. Settings › Reading
+  has the old behaviour under **After archiving or trashing › Next
+  conversation**, and anyone who already picked a side keeps their choice.
+
+- Keyboard shortcuts now work while you are reading a message. Clicking into an
+  email used to strand every key but **Esc**, so **F** to forward or **E** to
+  archive did nothing until you closed the conversation and opened it again.
+  Scrolling the message and selecting or copying text inside it are unchanged.
+  (#443)
+
+- The welcome tour's Views card stops teaching the **G** jump chords once you
+  have rebound them. It used to promise *"a chord, then a letter"* whatever your
+  keyboard settings said. (#451)
+
+- The welcome tour's illustrations now name the keys you actually use. If you
+  had rebound **Archive** or the follow-up reminder, the caption under the
+  picture kept teaching the old default while the text above it taught the new
+  key. (#439)
+
+- In dark theme, the welcome tour no longer paints light patches on its dark
+  illustrations — the **E** key on the keyboard slide and the dismiss ✕ on the
+  AI slide. The **E** key's letter and the feedback slide's **Send** label also
+  stay legible through the loop instead of fading out after each press. (#438)
+
+- On a large mailbox, the conversation you are reading no longer disappears
+  from the list once it is marked read. An old conversation used to drop out of
+  the loaded window the moment it stopped counting as unread, taking its row —
+  and anything you could still do to it from the list — with it. (#434)
+
+- Settings › About now links to the changelog: **View changelog** opens
+  nomailapp.com in your browser, where every release and what changed in it is
+  listed — including the one you are running. (#423)
+
+- The welcome tour's follow-ups illustration now draws the reminder pills the
+  way conversation rows actually draw them, naming the day and time a reminder
+  fires. It had been showing an older, dateless pill. (#426)
+
+- The conversation you are reading now keeps its place in the list. With
+  **Unread first** on, opening an old unread conversation used to quietly move
+  its row out of the **Unread** section down into its date group, so deleting
+  or archiving it scrolled the list months back and left you on unrelated old
+  mail. The row now holds its place until you move on. (#421)
+
+- When an account's sign-in is revoked or expires, NoMail now says so plainly:
+  the account is marked **Signed out** and offers **Reconnect**, instead of a
+  generic sync error that could just as easily have been your Wi-Fi. NoMail also
+  stops retrying the dead sign-in in the background until you reconnect. (#427)
+
+- Conversation rows now say when a reminder will fire — **Reminding tomorrow
+  09:00** — instead of just naming the date. Hovering the pill reveals
+  **Change** and **Cancel**, so a reminder can be re-pointed or called off
+  without opening the conversation. (#410)
+
+- A follow-up that has come back now says when it did — **Follow-up today
+  09:00** — and hovering its pill turns the whole pill into **Dismiss**, so one
+  click clears the follow-up without opening the conversation. (#411)
+
+- The **Unread** section at the top of a view now holds the view's unread mail
+  from the start, however old it is. On large mailboxes it used to show only the
+  unread threads among the most recent ones and grow as you scrolled, so old
+  unread mail stayed hidden and the number never matched the count in the
+  sidebar. (#416)
+
+- Settings now take effect the instant you change them. The **View settings**
+  toggle shows and hides the filter bar on the click, and options in the
+  Settings window apply without the brief pause they used to wait out while
+  the change was saved. (#415)
+
 ## 0.7.8 — 2026-08-12
 
 - Emails designed as a centered card — most modern newsletters and
