@@ -11,6 +11,35 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.7.10 — 2026-08-14
+
+- With **Unread first** on, a conversation you read now drops out of the
+  Unread section as soon as you close it, instead of sitting there looking
+  unread until the app restarted. While it is open it still keeps its place,
+  so the list never re-sorts under you mid-read. (#473)
+
+- Hovering an attachment now reads **Attachment — click to open, or drag to
+  save a copy** instead of repeating the file name shown on the chip. (#463)
+
+- The sort chip in the toolbar now reads **Newest first** / **Oldest first**
+  instead of a bare "Newest"/"Oldest" — the same phrasing the Settings use.
+  (#446)
+
+- The composer's **Remind** control now uses the same reminder configuration
+  as the rest of the app: toggling it arms your follow-up default from
+  Settings › Reading, and its menu offers the same four horizons plus the same
+  **Custom…** picker — counted from when the mail actually sends. The reminder
+  pill on a queued send gets the same menu. (#469)
+
+- Turning **Unread first** on or off (or changing the sort or grouping) no
+  longer makes the pinned split-inbox sections disappear. Only editing the
+  filter itself hides them now, as it always did. (#465)
+
+- Emails with images enabled no longer collapse into a thin scrollable strip
+  when an image's server never answers (a blocked tracking pixel is enough).
+  The message now shows at its full height right away and grows as images
+  arrive — and the keyboard shortcuts keep working while they load. (#464)
+
 ## 0.7.9 — 2026-08-14
 
 - The composer's `/` menu now stays fully inside the window: near the bottom of
