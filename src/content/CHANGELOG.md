@@ -11,6 +11,39 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.0 — 2026-08-14
+
+- Quitting while mail is still syncing — or while a sent message hasn't
+  reached the server yet — now asks first, with **Quit**, **Cancel**, and
+  **Always Quit**. Quitting when nothing is in flight never asks, and the
+  confirmation can be turned back on under Settings › General › **Confirm
+  quitting mid-sync**. (#419)
+
+- The first time you close the window, NoMail now asks what closing should
+  mean: **Keep running** (the default — mail keeps syncing and notifications
+  keep arriving from the menu bar) or **Quit when closed**. Your choice is
+  remembered and can be changed anytime in Settings › General under **When
+  closing the window**. (#420)
+
+- Calendar is now detection-only: invitations are still spotted and summarized
+  at the top of the conversation (with the row pill), but the Google Calendar
+  connection, RSVP buttons, and add/remove-event actions have been removed —
+  RSVPs sent as bare reply emails didn't read as real calendar actions. The
+  Settings › Calendar pane is gone with them. (#442)
+
+- Sent now shows who each conversation went **to** — the recipient's name on
+  every row — instead of repeating your own name. (#467)
+
+- The app stays responsive while a large mailbox downloads: syncing now
+  leaves most of each second free for scrolling, opening conversations, and
+  triage keys instead of hogging the app, and the list refreshes at a calmer
+  pace while mail is streaming in. (#470)
+
+- On a brand-new install, NoMail now finishes fetching your mail before
+  opening the inbox — with live progress and a **Start using NoMail now**
+  button if you'd rather not wait — instead of dropping you into a
+  half-loaded, laggy mailbox. (#470)
+
 ## 0.7.10 — 2026-08-14
 
 - With **Unread first** on, a conversation you read now drops out of the
