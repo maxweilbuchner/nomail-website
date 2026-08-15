@@ -11,6 +11,37 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.1 — 2026-08-15
+
+- Syncing a large batch of changes now shows real progress in the sidebar — a
+  filling ring with **Syncing X of Y changes…** — instead of a bare countdown
+  that read like a backlog. Small batches keep the simple count. (#448)
+
+- When a **Sync all mail** import lands a large block of old unread mail in
+  your inbox, NoMail now says so and offers to clear it: a banner names the
+  exact count of unread conversations older than 3 months and marks them all
+  read in one click — nothing is moved or deleted. Dismissing the offer keeps
+  it dismissed. (#418)
+
+- Turning on **Sync all mail** now runs your imported history through the
+  same automatic labeling as recent mail: once the download finishes, the
+  archive is classified in the background — with the usual progress readout
+  in the AI pill, cancellable at any time — instead of arriving as a wall of
+  unlabeled conversations. (#428)
+
+- The welcome tour now asks how much mail should live on your Mac: a new
+  card right after the welcome offers **Sync all mail** — the full offline
+  archive — with live download progress, instead of leaving that choice
+  buried in Settings › Advanced. (#417)
+
+- The **Commands** button in the top bar no longer shows a magnifying glass —
+  that glyph now always means searching your mail, never running a command.
+  (#475)
+
+- Opening a composer and closing it without typing no longer leaves an empty
+  draft behind — in NoMail's Drafts or on the server. Any real edit, even just
+  a subject or a recipient, still saves the draft as before. (#471)
+
 ## 0.8.0 — 2026-08-14
 
 - Quitting while mail is still syncing — or while a sent message hasn't
