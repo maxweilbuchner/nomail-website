@@ -11,6 +11,10 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.3 — 2026-08-21
+
+- Code blocks in the composer get a proper language chip — a bordered, chevroned control you can filter by typing — and no longer indent every line to make room for it.
+
 ## 0.8.2 — 2026-08-21
 
 - The composer's `/` menu now finds blocks by the markdown token it shows or
