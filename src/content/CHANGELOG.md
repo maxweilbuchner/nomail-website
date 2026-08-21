@@ -11,6 +11,18 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.2 — 2026-08-21
+
+- The composer's `/` menu now finds blocks by the markdown token it shows or
+  by common names — `/#`, `/h1`, `/todo`, `/hr` all work — and snippets and
+  blocks are grouped under labels. "To-do list" is now called
+  "Task list". (#462)
+
+- Code blocks in the composer now have syntax highlighting: the language is
+  auto-detected as you type, or pick one from the selector on the block. The
+  colors ship inside the sent email too, so recipients see the same
+  highlighted code. (#461)
+
 ## 0.8.1 — 2026-08-15
 
 - Syncing a large batch of changes now shows real progress in the sidebar — a
