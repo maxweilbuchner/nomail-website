@@ -11,6 +11,16 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.4 — 2026-08-25
+
+- Links in plain-text messages are now clickable and open in your browser.
+
+- Bare email addresses in plain-text messages are now clickable and open a
+  prefilled compose window. (#506)
+
+- Printing a conversation now keeps the links in plain-text messages — they
+  print underlined and stay clickable in a saved PDF. (#507)
+
 ## 0.8.3 — 2026-08-21
 
 - Code blocks in the composer get a proper language chip — a bordered, chevroned control you can filter by typing — and no longer indent every line to make room for it.
