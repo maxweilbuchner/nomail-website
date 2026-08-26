@@ -11,6 +11,27 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.5 — 2026-08-26
+
+- A search can now be saved as a view: with a query typed, the search header
+  offers **Save as view**, which keeps the current view's scope and carries the
+  query as an editable **Matches** filter condition. Saved searches cover mail
+  synced to this Mac. (#514)
+
+- Views can now filter on full message text: the new **Matches** condition
+  searches the same index as the search box — subject, sender, and message
+  bodies — with the same word-prefix matching, and can be negated and combined
+  like any other filter. (#514)
+
+- **Paste and Match Style** is now in the Edit menu, bound to the standard
+  `⌘⇧V`: pasted text takes on your message's formatting instead of dragging
+  along fonts, colors, and links from wherever it was copied. (#511)
+
+- Settings and the welcome tour no longer describe crash dumps as
+  "anonymized": a dump is a snapshot of the app's memory and can contain
+  message fragments, as the privacy policy states. Crash reports remain off
+  by default. (#9)
+
 ## 0.8.4 — 2026-08-25
 
 - Links in plain-text messages are now clickable and open in your browser.
