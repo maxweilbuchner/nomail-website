@@ -73,7 +73,7 @@ const schema = graph(organization(), faqPage(faq));
             src={`${SPONSORS_URL}/card`}
             title="Sponsor NoMail on GitHub"
             width="600"
-            height="225"
+            height="150"
             loading="lazy"
           />
         ) : (
@@ -134,12 +134,28 @@ const schema = graph(organization(), faqPage(faq));
     color: var(--nm-fg-secondary);
   }
 
-  /* GitHub renders the card light-only; color-scheme keeps it from inheriting
-     a dark UA scheme it doesn't paint for. */
+  /* The card follows prefers-color-scheme itself (data-color-mode="auto"),
+     so let the iframe canvas match whichever scheme it paints. */
   .sponsor__card {
     margin-top: var(--space-5);
     border: 0;
     max-width: 100%;
-    color-scheme: light;
+    color-scheme: light dark;
+  }
+
+  /* The card content grows as the iframe narrows: the bio wraps, and below
+     544px GitHub stacks the Sponsor button under the text. Heights measured
+     against the live card (127px at full width, 228px at ~330px wide, 270px
+     at ~272px) — re-measure if the sponsor bio changes. */
+  @media (max-width: 600px) {
+    .sponsor__card {
+      height: 240px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .sponsor__card {
+      height: 280px;
+    }
   }
 </style>
