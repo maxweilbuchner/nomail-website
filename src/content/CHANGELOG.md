@@ -11,6 +11,13 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.6 — 2026-10-02
+
+- Gmail sync now recovers from a mailbox-wide change made in another client,
+  such as a bulk relabel. The catch-up is fetched in resumable slices, and a
+  rate-limited pass waits instead of retrying into it, so sending mail no
+  longer stalls. (#525)
+
 ## 0.8.5 — 2026-08-26
 
 - A search can now be saved as a view: with a query typed, the search header
