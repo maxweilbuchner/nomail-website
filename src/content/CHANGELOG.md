@@ -11,6 +11,41 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.7 — 2026-10-06
+
+- The Getting started checklist now teaches views with your **Newsletters**
+  section: its step opens the section with the filter editor ready, and changing,
+  renaming, or unpinning the section checks it off. (#539)
+
+- Hide the sidebar with **⌃⌘S**, **View › Hide Sidebar**, or the new sidebar
+  button beside the window controls. NoMail remembers the choice, and the
+  sidebar comes back at the width you left it. (#536)
+
+- Opening a conversation slides the reading pane in beside the list instead
+  of snapping the layout in one frame, and closing slides it back out. The
+  motion is brief, keys work immediately, and Reduce Motion turns it off.
+  (#535)
+
+- New accounts start with a **Newsletters** section in the Inbox: mailing-list
+  mail moves out of the main flow, and unread issues collect in their own
+  section without notifications. It's an ordinary view you can edit, unpin,
+  or delete. (#538)
+
+- Views can filter on **Is a newsletter**: mailing-list mail, meaning any
+  conversation that shows an Unsubscribe link. Its inverse, **Is not a
+  newsletter**, keeps that mail out. (#537)
+
+- An open conversation keeps the messages you expanded, and its scroll
+  position, when mail syncs or the conversation is marked read. (#529)
+
+- Message links marked to open in place now open in your browser like any
+  other link, instead of blanking the message and stretching it endlessly.
+  (#531)
+
+- Search results can now be sorted by **Time**, **Name**, or **Sender** from
+  the search header, with **Relevance** still the default. **Save as view**
+  keeps the sort you chose, so the saved view opens in the same order. (#519)
+
 ## 0.8.6 — 2026-10-02
 
 - Gmail sync now recovers from a mailbox-wide change made in another client,
