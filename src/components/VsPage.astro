@@ -1,0 +1,121 @@
+---
+/**
+ * One comparison page (/vs/<app>/). The pages share their shape — at-a-glance
+ * table, where NoMail differs, where the other app is the better pick, FAQ —
+ * so the structure and the Gmail note live here once and each page passes only
+ * its facts. Every claim about the other app is dated by `checked`; re-verify
+ * them against the vendor's own pages before changing that date.
+ */
+import Base from "../layouts/Base.astro";
+import rawChangelog from "../content/CHANGELOG.md?raw";
+import { parseChangelog } from "../lib/render-changelog";
+import { graph, organization, softwareApplication, faqPage } from "../lib/schema";
+import { CONTACT_EMAIL, MIN_MACOS } from "../config";
+import { withBase } from "../lib/url";
+
+interface Props {
+  title: string;
+  description: string;
+  /** The other app's name as it reads in a sentence. */
+  other: string;
+  /** Month and year the claims about the other app were last checked. */
+  checked: string;
+  /** Opening paragraph(s), HTML. */
+  intro: string;
+  rows: readonly { label: string; nomail: string; other: string }[];
+  /** "Where NoMail is different" bullets, HTML. */
+  differs: readonly string[];
+  /** "Where <other> is the better choice" bullets, HTML. */
+  better: readonly string[];
+  faq: readonly { q: string; a: string }[];
+}
+
+const { title, description, other, checked, intro, rows, differs, better, faq } = Astro.props;
+const latest = parseChangelog(rawChangelog)[0];
+const schema = graph(
+  organization(),
+  softwareApplication(latest?.version, latest?.date),
+  faqPage(faq),
+);
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="container">
+    <article class="prose vs">
+      <h1>NoMail vs {other}</h1>
+      <Fragment set:html={intro} />
+
+      <h2>At a glance</h2>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">NoMail</th>
+            <th scope="col">{other}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td set:html={row.nomail} />
+                <td set:html={row.other} />
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+
+      <h2>Where NoMail is different</h2>
+      <ul>{differs.map((item) => <li set:html={item} />)}</ul>
+
+      <h2>Where {other} is the better choice</h2>
+      <ul>{better.map((item) => <li set:html={item} />)}</ul>
+
+      <h2>A note on Gmail</h2>
+      <p>
+        NoMail’s Google verification is still in progress. Until it completes, Google lets only
+        accounts on NoMail’s tester list sign in to Gmail with the built-in setup — anyone else
+        needs to create their own Google Cloud OAuth client, which NoMail’s onboarding walks
+        through. Outlook.com, iCloud, Fastmail and other IMAP or JMAP accounts are not affected.
+      </p>
+
+      <h2>Questions</h2>
+      <dl class="faq">
+        {
+          faq.map((item) => (
+            <div class="faq__item">
+              <dt>{item.q}</dt>
+              <dd set:html={item.a} />
+            </div>
+          ))
+        }
+      </dl>
+
+      <p class="vs__checked">
+        What this page says about {other} was last checked in {checked}. Pricing and features
+        change — if something here is out of date, tell us at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <h2>Try NoMail</h2>
+      <p>Free, for {MIN_MACOS} or later. It runs alongside whatever you use today.</p>
+      <p><a class="btn btn--primary" href={withBase("/download/")}>Download NoMail</a></p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .vs {
+    margin-block: var(--space-8);
+  }
+
+  .vs .faq__item:first-child {
+    border-top: 0;
+  }
+
+  .vs__checked {
+    color: var(--nm-fg-secondary);
+    font-size: 0.9375rem;
+  }
+</style>

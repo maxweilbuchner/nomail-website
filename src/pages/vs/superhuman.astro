@@ -1,0 +1,67 @@
+---
+import VsPage from "../../components/VsPage.astro";
+
+const faq = [
+  {
+    q: "Is NoMail as keyboard-driven as Superhuman?",
+    a: "Keyboard-first is the core of both. NoMail has single-key actions for triage, a ⌘K command menu for everything else, and lets you rebind any shortcut.",
+  },
+  {
+    q: "Does my mail go through NoMail’s servers?",
+    a: "No. NoMail has no backend: it talks to your provider directly and keeps mail in a local database on your Mac.",
+  },
+  {
+    q: "Does NoMail have an iPhone or Windows app?",
+    a: "No — NoMail is Mac-only. If you need the same client on your phone or on Windows, Superhuman covers those.",
+  },
+];
+---
+
+<VsPage
+  title="NoMail vs Superhuman — a free, local-first Mac email client"
+  description="Superhuman and NoMail are both keyboard-first. How they differ: price, where your mail is processed, account support, platforms, and when Superhuman wins."
+  other="Superhuman"
+  checked="November 2026"
+  intro={`<p>Superhuman made keyboard-first email mainstream: fast triage, a command palette, and AI that drafts and summarizes for you, sold as a subscription for professionals and teams. NoMail keeps the keyboard-first part and changes the rest — it is free, it runs entirely on your Mac, and its AI runs there too.</p>`}
+  rows={[
+    {
+      label: "Accounts",
+      nomail: "Gmail, Outlook.com, iCloud, Fastmail, any IMAP or JMAP",
+      other: "Gmail and Outlook",
+    },
+    {
+      label: "Platforms",
+      nomail: "Mac (macOS 12+)",
+      other: "Mac, Windows, web, iPhone and Android",
+    },
+    {
+      label: "Price",
+      nomail: "Free",
+      other: `Per-seat subscription; no free plan for Mail (<a href="https://superhuman.com/pricing">pricing</a>)`,
+    },
+    {
+      label: "Where mail lives",
+      nomail: "On your Mac; no NoMail servers",
+      other: "With your provider; with Ask AI on, also stored with Superhuman’s cloud vendor",
+    },
+    {
+      label: "AI",
+      nomail: "On-device model on Apple Silicon; optional external provider with your own key",
+      other: "Cloud AI built in (runs on OpenAI’s API)",
+    },
+  ]}
+  differs={[
+    "<strong>Local-first.</strong> Your mail sits in a database on your Mac and goes only between your Mac and your provider. Search is instant and works offline.",
+    "<strong>AI that stays on your Mac.</strong> Auto-labels and thread summaries run on a bundled local model on Apple Silicon. External AI is opt-in, with your own API key.",
+    "<strong>Any provider.</strong> Besides Gmail and Outlook.com: iCloud, Fastmail and other JMAP servers, and generic IMAP.",
+    "<strong>Views instead of folders.</strong> Saved queries that filter, group and sort, pinned as sections of a split inbox.",
+    "<strong>Free.</strong> No subscription, no seats.",
+  ]}
+  better={[
+    "<strong>You need it everywhere.</strong> Superhuman runs on Mac, Windows, the web, iPhone and Android with the same workflow; NoMail is Mac-only.",
+    "<strong>You want the most capable AI drafting.</strong> Superhuman’s cloud AI writes and rewrites replies and answers questions about your inbox. NoMail’s on-device model is smaller by design and focuses on labeling and summaries.",
+    "<strong>You buy for a team.</strong> Superhuman sells business and enterprise plans; NoMail is a single-user app with no team features.",
+    "<strong>You’re on Gmail and want sign-in to just work today.</strong> See the Gmail note below.",
+  ]}
+  faq={faq}
+/>

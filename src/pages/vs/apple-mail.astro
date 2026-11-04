@@ -1,0 +1,67 @@
+---
+import VsPage from "../../components/VsPage.astro";
+
+const faq = [
+  {
+    q: "Do I have to stop using Apple Mail to try NoMail?",
+    a: "No. Both connect to your provider directly, so read state, folders and archive stay in sync — run them side by side and keep whichever fits.",
+  },
+  {
+    q: "Does NoMail work with iCloud Mail?",
+    a: "Yes, with an app-specific password from your Apple Account settings, alongside Gmail, Outlook.com, Fastmail and any IMAP account.",
+  },
+  {
+    q: "Is NoMail on iPhone?",
+    a: "No — NoMail is Mac-only. Apple Mail on your iPhone keeps working with the same accounts.",
+  },
+];
+---
+
+<VsPage
+  title="NoMail vs Apple Mail — a keyboard-first Mac email client"
+  description="Apple Mail is free and already on your Mac. What NoMail adds — keyboard-first triage, saved views, a Markdown composer — and when Apple Mail wins."
+  other="Apple Mail"
+  checked="November 2026"
+  intro={`<p>Apple Mail is the default for a reason: it is free, already on every Mac, iPhone and iPad, and works with almost any account. NoMail is for people who spend hours a day in email and want it to move at the speed of the keyboard — and who would rather shape their inbox than file messages into folders.</p>`}
+  rows={[
+    {
+      label: "Accounts",
+      nomail: "Gmail, Outlook.com, iCloud, Fastmail, any IMAP or JMAP",
+      other: "iCloud, Gmail, Exchange and Microsoft 365, Yahoo, any IMAP",
+    },
+    {
+      label: "Platforms",
+      nomail: "Mac (macOS 12+)",
+      other: "Mac, iPhone and iPad, built in",
+    },
+    {
+      label: "Price",
+      nomail: "Free",
+      other: "Free, included with macOS",
+    },
+    {
+      label: "Organizing",
+      nomail: "Saved views (filter, group, sort) pinned as inbox sections",
+      other: "Folders, rules and Smart Mailboxes",
+    },
+    {
+      label: "AI",
+      nomail: "On-device model on Apple Silicon; optional external provider with your own key",
+      other: "Apple Intelligence summaries and Priority messages (Apple silicon, macOS 15.1 or later)",
+    },
+  ]}
+  differs={[
+    "<strong>Keyboard-first.</strong> Single keys archive, snooze, label and reply, a ⌘K command menu reaches everything else, and every shortcut can be rebound.",
+    "<strong>Views instead of folders.</strong> A view is a saved query — filter, group and sort — and views pin as sections of a split inbox, so newsletters, receipts and the people you work with each get their own lane.",
+    "<strong>A Markdown composer.</strong> Headings, lists, to-dos, quotes and code blocks as you type, with snippets that fill in variables.",
+    "<strong>Snooze and follow-ups.</strong> Snooze a thread until later, or ask to be reminded if nobody replies.",
+    "<strong>Built for several accounts at once.</strong> Gmail, Outlook.com, iCloud and Fastmail side by side, or merged into one combined inbox.",
+  ]}
+  better={[
+    "<strong>You use Exchange or a work Microsoft 365 account.</strong> Apple Mail supports both; NoMail’s Microsoft support covers personal Outlook.com and Hotmail accounts.",
+    "<strong>You want one app on every device.</strong> Apple Mail is on your iPhone and iPad already; NoMail is Mac-only.",
+    "<strong>You want nothing to set up.</strong> Apple Mail is already installed, and Gmail sign-in works without extra steps (see the Gmail note below).",
+    "<strong>You read more mail than you triage.</strong> If email is a few minutes a day, Apple Mail’s defaults are hard to beat.",
+  ]}
+  faq={faq}
+/>

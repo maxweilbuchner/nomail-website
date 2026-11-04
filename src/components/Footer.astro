@@ -10,12 +10,22 @@ const nav = [
   { href: withBase("/imprint/"), label: "Imprint" },
   { href: ALL_RELEASES, label: "GitHub" },
 ];
+
+const compare = [
+  { href: withBase("/vs/mimestream/"), label: "Mimestream" },
+  { href: withBase("/vs/superhuman/"), label: "Superhuman" },
+  { href: withBase("/vs/apple-mail/"), label: "Apple Mail" },
+];
 ---
 
 <footer class="footer">
   <div class="container footer__inner">
     <nav class="footer__nav" aria-label="Footer">
       {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <nav class="footer__compare" aria-label="Comparisons">
+      <span>Compare NoMail with</span>
+      {compare.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
     <p class="footer__legal">
       © 2026 NoMail · <a href="https://fsl.software">Fair Source, FSL-1.1-ALv2</a> — each release
@@ -52,6 +62,18 @@ const nav = [
   .footer__nav a:hover {
     color: var(--nm-fg);
     text-decoration: none;
+  }
+
+  .footer__compare {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    color: var(--nm-fg-faint);
+    font-size: 0.875rem;
+  }
+
+  .footer__compare a {
+    color: var(--nm-fg-secondary);
   }
 
   .footer__legal {

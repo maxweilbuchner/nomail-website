@@ -1,0 +1,67 @@
+---
+import VsPage from "../../components/VsPage.astro";
+
+const faq = [
+  {
+    q: "Can I use NoMail and Mimestream side by side?",
+    a: "Yes. Both talk to Gmail directly, so labels, read state and archive stay in sync through Gmail itself — you can try NoMail without giving anything up.",
+  },
+  {
+    q: "Does NoMail work with accounts other than Gmail?",
+    a: "Yes: Gmail and Google Workspace, Outlook.com and Hotmail, Fastmail and other JMAP servers, iCloud, and any IMAP account, side by side or in one combined inbox. Mimestream is built for Gmail only.",
+  },
+  {
+    q: "Is NoMail free?",
+    a: "Yes. There is no subscription and no paid tier.",
+  },
+];
+---
+
+<VsPage
+  title="NoMail vs Mimestream — a free Mac email client beyond Gmail"
+  description="NoMail and Mimestream are both fast Mac email clients. How they differ on providers, price, views and AI — and when Mimestream is the better pick."
+  other="Mimestream"
+  checked="November 2026"
+  intro={`<p>Mimestream and NoMail start from the same idea: a fast Mac email client that talks to your provider directly, keeps your mail on your Mac, and gets out of your way. Mimestream goes deep on one provider — Gmail — while NoMail spreads across several and builds its own way of organizing mail on top.</p>`}
+  rows={[
+    {
+      label: "Accounts",
+      nomail: "Gmail, Outlook.com, iCloud, Fastmail, any IMAP or JMAP",
+      other: "Gmail and Google Workspace",
+    },
+    {
+      label: "Platforms",
+      nomail: "Mac (macOS 12+)",
+      other: "Mac (macOS 12+); iPhone and iPad in beta",
+    },
+    {
+      label: "Price",
+      nomail: "Free",
+      other: `Subscription, yearly or monthly, with a free trial (<a href="https://mimestream.com/pricing">pricing</a>)`,
+    },
+    {
+      label: "Where mail lives",
+      nomail: "On your Mac; no NoMail servers",
+      other: "On your Mac; connects straight to the Gmail API",
+    },
+    {
+      label: "Organizing",
+      nomail: "Saved views (filter, group, sort) pinned as inbox sections",
+      other: "Gmail labels, categories and server-side filters",
+    },
+  ]}
+  differs={[
+    "<strong>More than Gmail.</strong> Work Gmail, a personal iCloud address and a Fastmail account can sit side by side, or merge into one combined inbox.",
+    "<strong>Views instead of folders.</strong> Filter, group and sort mail like a database query, save it as a named view, and pin views as sections of a split inbox.",
+    "<strong>A Markdown composer.</strong> Headings, lists, to-dos and code blocks as you type, plus snippets with variables, scheduled send and undo send.",
+    "<strong>On-device AI.</strong> Auto-labels and thread summaries run on a local model on Apple Silicon — nothing leaves your Mac unless you opt into an external provider.",
+    "<strong>Free.</strong> No subscription.",
+  ]}
+  better={[
+    "<strong>You live entirely in Gmail.</strong> Mimestream is built around Gmail’s own features — server-side filters, aliases, vacation responders, categories — and exposes more of them than a multi-provider client does.",
+    "<strong>You want Gmail sign-in to just work today.</strong> See the Gmail note below: until NoMail’s Google verification completes, most Gmail users need an extra setup step that Mimestream doesn’t ask for.",
+    "<strong>You want it on your iPhone and iPad.</strong> Mimestream has an iOS and iPadOS app in beta; NoMail is Mac-only.",
+    "<strong>You prefer a fully native app.</strong> Mimestream is written natively for macOS; NoMail is a desktop app with its own interface.",
+  ]}
+  faq={faq}
+/>

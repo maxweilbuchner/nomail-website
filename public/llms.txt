@@ -35,6 +35,12 @@ this one is the macOS email client published at https://nomailapp.com.
 - [Support](https://nomailapp.com/support/): FAQ and contact.
 - [Privacy policy](https://nomailapp.com/privacy/): what is stored and where.
 - [Imprint](https://nomailapp.com/imprint/): legal disclosure.
+- [NoMail vs Mimestream](https://nomailapp.com/vs/mimestream/): how NoMail
+  compares with Mimestream, and when Mimestream is the better choice.
+- [NoMail vs Superhuman](https://nomailapp.com/vs/superhuman/): how NoMail
+  compares with Superhuman, and when Superhuman is the better choice.
+- [NoMail vs Apple Mail](https://nomailapp.com/vs/apple-mail/): how NoMail
+  compares with Apple Mail, and when Apple Mail is the better choice.
 
 ## Elsewhere
 
