@@ -22,8 +22,8 @@ const faq = [
     a: `On your Mac, and nowhere else: mail lives in a local SQLite database, and NoMail has no backend your mail passes through. The <a href="${withBase("/privacy/")}">privacy policy</a> has the full picture.`,
   },
   {
-    q: "Google shows an “unverified app” warning when I sign in — is that expected?",
-    a: "Yes, for now. NoMail talks directly to Gmail with credentials you grant it; while Google’s verification of the app is still in progress, the consent screen shows that warning. Your mail still goes only between your Mac and Google.",
+    q: "Why can’t I sign in to Gmail, or why does Google show an “unverified app” warning?",
+    a: "NoMail’s Google verification is still in progress. Until it completes, Google lets only accounts on NoMail’s tester list sign in with the built-in setup — they see an “unverified app” warning first and are asked to sign in again about once a week. Anyone else can connect Gmail by creating their own Google Cloud OAuth client; NoMail’s onboarding walks you through it. Either way, your mail goes only between your Mac and Google.",
   },
 ];
 
