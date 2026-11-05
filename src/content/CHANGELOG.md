@@ -11,6 +11,38 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.8.8 — 2026-11-05
+
+- Sending a Bcc'd message from an IMAP account no longer garbles text written
+  in older character sets, such as a draft started in another mail app. (#564)
+
+- A send from an IMAP account to a mail server that stalls without ever
+  answering now gives up after five minutes instead of holding up every later
+  send and change on that account. (#563)
+
+- When a send fails because the mail server no longer accepts your password,
+  the account now asks you to reconnect right away instead of showing only a
+  send error. (#560)
+
+- IMAP accounts get more time to start a send on slow networks or mail servers
+  that pause before answering, so sends there no longer time out before they
+  begin. (#562)
+
+- Sending from an IMAP account now requires an encrypted connection: if the
+  mail server doesn't offer encryption, NoMail refuses to send rather than
+  sending your password unprotected. (#557)
+
+- Mail sent from an IMAP account no longer reveals your Mac's name to the mail
+  server or, through its delivery headers, to your recipients. (#561)
+
+- When an IMAP mail server refuses some recipients of a message but delivers
+  it to the rest, NoMail now tells you who didn't get it instead of reporting
+  a clean send. (#558)
+
+- Sending from an IMAP account now retries when the connection drops or the
+  server asks to try again later, instead of failing the send on the first
+  hiccup. Sends a server refuses outright still fail right away. (#559)
+
 ## 0.8.7 — 2026-10-06
 
 - The Getting started checklist now teaches views with your **Newsletters**
