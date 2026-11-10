@@ -11,6 +11,20 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.0 — 2026-11-10
+
+- Auto-labeling now decides each label on its own, so a conversation can get
+  several labels or none, and a label is only applied automatically once its
+  suggestions have proven reliable — until then it suggests. Every accept,
+  dismiss, add and remove teaches it right away, labeling needs only the small
+  embedding model instead of waiting on the chat model, and mail in Spam or
+  Trash is no longer labeled.
+
+- The AI panel now shows what each label is doing — **Auto** with how often it
+  has been right, **Suggests** while it is still learning, or **Off** — and
+  clicking that status sets the label to **Auto**, **Suggest only** or **Off**.
+  The choice travels with a settings backup.
+
 ## 0.8.8 — 2026-11-05
 
 - Sending a Bcc'd message from an IMAP account no longer garbles text written
