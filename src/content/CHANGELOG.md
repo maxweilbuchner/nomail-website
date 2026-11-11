@@ -11,6 +11,28 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.1 — 2026-11-11
+
+- Marking conversations read with **Unread first** on now moves all of them out
+  of the **Unread** section right away. The row under the keyboard cursor used
+  to stay behind as a read conversation until the cursor moved. (#584)
+
+- Snoozed conversations stay in **Snoozed**, with their wake time, after
+  **Rebuild local database**. They used to show as archived until they came
+  back to the Inbox. (#587)
+
+- A message that could not be sent yet and is being retried now shows
+  **Retrying…** in Drafts and in the Sent view. It used to count down or read
+  as scheduled, as if it had not been sent. (#589)
+
+- The sync indicator no longer keeps spinning for an account that was signed
+  out while a sync was running. (#590)
+
+- Pressing **⌘Enter** twice in a composer no longer queues the message twice,
+  and the shortcut no longer sends from a composer whose draft is already
+  queued or sent. Changing **From** on a draft that is already queued to send
+  now leaves it alone instead of stopping the send. (#592)
+
 ## 0.9.0 — 2026-11-10
 
 - Auto-labeling now decides each label on its own, so a conversation can get
