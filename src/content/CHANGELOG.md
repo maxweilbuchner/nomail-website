@@ -11,6 +11,63 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.2 — 2026-11-17
+
+- Switching the signature also works in drafts started before signatures
+  could be switched, and for one you typed in yourself: the old one is
+  replaced instead of kept beside the new one. (#638)
+
+- Changing **From** in a draft now also changes its signature to the new
+  account's default. (#637)
+
+- A reply or draft the AI writes can bring the matching signature. Under
+  **Settings › Composing**, pick one signature for formal AI drafts and one
+  for informal ones; a signature you chose yourself in a draft is left alone.
+  (#631)
+
+- **Default tone** under **Settings › Intelligence** says how suggested
+  replies and **Draft with AI** should sound to someone you never wrote to:
+  Formal, Friendly or Brief. A conversation that already has a tone keeps it.
+  (#629)
+
+- **Several signatures per account.** Settings › Composing keeps as many named
+  signatures as you like and lets you pick the default, or none. In a draft,
+  the signature's name at the bottom of the composer switches to another one
+  without leaving the old one behind. (#630)
+
+- Suggested replies and **Draft with AI** take their tone from the
+  conversation they join. What you already wrote in the thread comes first,
+  and a German or French reply uses the form of address the thread uses —
+  "Sie" where it is formal, "du" where it is not. (#628)
+
+- Suggested replies and **Draft with AI** now follow how you usually write to
+  that person: short and lowercase if that is your habit with them, formal if
+  it is not. This is worked out on your Mac from mail you sent them before;
+  that mail itself is not sent to the AI provider. (#609)
+
+- **Draft with AI.** The new sparkle button next to Attach takes a line saying
+  what the message should say (for example "decline, propose next week") and
+  writes it into the draft for you to edit. It works in replies, new messages
+  and forwards, adds to what you have typed and never sends. The instruction
+  can be in English or German; in other languages the built-in model is less
+  reliable. Turn it on under **Settings › Intelligence**. (#608, #615, #625)
+
+- A message with no text of its own, such as a calendar reply that is only an
+  attached `.ics` file, now opens showing **No message text** and its
+  attachment. It used to show the loading placeholder forever. (#601)
+
+- A message sent while offline now goes out by itself once the connection is
+  back, however long that takes; it shows **Retrying…** in Drafts until then.
+  It used to be given up on after about two minutes and turned back into a
+  plain draft. A message the mail server refuses is marked **Not sent** in
+  Drafts until you edit or resend it; click **Not sent** to send it again.
+  Messages given up on by earlier versions are marked the same way. (#595, #619)
+
+- **Reply suggestions.** With AI set up, a conversation that ends on someone
+  else's message offers up to three short replies above the Reply button.
+  Picking one opens a normal reply with that text for you to edit and send;
+  nothing is sent on its own. Turn it on under **Settings › Intelligence**. (#599)
+
 ## 0.9.1 — 2026-11-11
 
 - Marking conversations read with **Unread first** on now moves all of them out
