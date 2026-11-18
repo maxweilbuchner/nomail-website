@@ -11,6 +11,21 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.3 — 2026-11-18
+
+- **Draft with AI** can write a follow-up. When the last message in a
+  conversation is your own, an instruction like "follow up" or "remind her"
+  gives a short nudge about what you asked, instead of an answer to your own
+  message. (#644)
+
+- **Draft with AI** accepts the reply itself as the instruction: type what
+  you want to say and it goes into the draft, instead of "Nothing came back".
+  (#639)
+
+- **Draft with AI** no longer writes an unrelated message when the built-in
+  model loses track of an instruction in another language; it says it could
+  not turn that into a message instead. (#632)
+
 ## 0.9.2 — 2026-11-17
 
 - Switching the signature also works in drafts started before signatures
