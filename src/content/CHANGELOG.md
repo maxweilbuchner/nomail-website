@@ -11,6 +11,18 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.4 — 2026-11-19
+
+- New-mail and reminder notifications have **Delete** and **Reply** buttons
+  (under **Options** on a banner). Delete moves the conversation to Trash
+  without bringing NoMail forward; Reply opens a reply in its own window.
+  Notifications that summarize several conversations have no buttons. (#649)
+
+- **Draft with AI** no longer puts your instruction into the message when the
+  model fails to act on it. A short instruction like "decline politely" that
+  comes back unchanged is reported again; a reply you type out as a full
+  sentence still goes in as written. (#646)
+
 ## 0.9.3 — 2026-11-18
 
 - **Draft with AI** can write a follow-up. When the last message in a
