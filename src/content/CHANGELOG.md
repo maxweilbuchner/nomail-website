@@ -11,6 +11,17 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.5 — 2026-11-25
+
+- The AI provider's **Model** field is now a list of the models your key can
+  use, loaded as soon as the key checks out, so a mistyped or retired model
+  can't be saved. A saved model the provider no longer offers is swapped for a
+  current one, and the form says so.
+
+- When connecting an AI provider fails, the settings form now shows the
+  provider's own explanation (for example "Your credit balance is too low")
+  instead of a bare HTTP status.
+
 ## 0.9.4 — 2026-11-19
 
 - New-mail and reminder notifications have **Delete** and **Reply** buttons
