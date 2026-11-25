@@ -40,82 +40,226 @@ const schema = graph(
 ---
 
 <Base title={title} description={description} schema={schema}>
-  <div class="container">
-    <article class="prose vs">
-      <h1>NoMail vs {other}</h1>
-      <Fragment set:html={intro} />
+  <div class="container page">
+    <article class="vs">
+      <header class="page-head vs__head">
+        <h1>NoMail vs {other}</h1>
+        <div class="vs__intro" set:html={intro} />
+      </header>
 
-      <h2>At a glance</h2>
-      <table>
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">NoMail</th>
-            <th scope="col">{other}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            rows.map((row) => (
+      <section class="vs__glance" aria-labelledby="vs-glance">
+        <h2 id="vs-glance">At a glance</h2>
+        <div class="vs__scroll">
+          <table class="vs__table">
+            <thead>
               <tr>
-                <th scope="row">{row.label}</th>
-                <td set:html={row.nomail} />
-                <td set:html={row.other} />
+                <th scope="col"><span class="visually-hidden">Topic</span></th>
+                <th scope="col">NoMail</th>
+                <th scope="col">{other}</th>
               </tr>
-            ))
-          }
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {
+                rows.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td data-label="NoMail" set:html={row.nomail} />
+                    <td data-label={other} set:html={row.other} />
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-      <h2>Where NoMail is different</h2>
-      <ul>{differs.map((item) => <li set:html={item} />)}</ul>
+      <section class="vs__part prose">
+        <h2>Where NoMail is different</h2>
+        <ul>{differs.map((item) => <li set:html={item} />)}</ul>
+      </section>
 
-      <h2>Where {other} is the better choice</h2>
-      <ul>{better.map((item) => <li set:html={item} />)}</ul>
+      <section class="vs__part prose">
+        <h2>Where {other} is the better choice</h2>
+        <ul>{better.map((item) => <li set:html={item} />)}</ul>
+      </section>
 
-      <h2>A note on Gmail</h2>
-      <p>
-        NoMail’s Google verification is still in progress. Until it completes, Google lets only
-        accounts on NoMail’s tester list sign in to Gmail with the built-in setup — anyone else
-        needs to create their own Google Cloud OAuth client, which NoMail’s onboarding walks
-        through. Outlook.com, iCloud, Fastmail and other IMAP or JMAP accounts are not affected.
-      </p>
+      <section class="vs__part prose">
+        <h2>A note on Gmail</h2>
+        <p>
+          NoMail’s Google verification is still in progress. Until it completes, Google lets only
+          accounts on NoMail’s tester list sign in to Gmail with the built-in setup; anyone else
+          needs to create their own Google Cloud OAuth client, which NoMail’s onboarding walks
+          through. Outlook.com, iCloud, Fastmail and other IMAP or JMAP accounts are not affected.
+        </p>
+      </section>
 
-      <h2>Questions</h2>
-      <dl class="faq">
-        {
-          faq.map((item) => (
-            <div class="faq__item">
-              <dt>{item.q}</dt>
-              <dd set:html={item.a} />
-            </div>
-          ))
-        }
-      </dl>
+      <section class="vs__part">
+        <h2>Questions</h2>
+        <div>
+          <dl class="faq">
+            {
+              faq.map((item) => (
+                <div class="faq__item">
+                  <dt>{item.q}</dt>
+                  <dd set:html={item.a} />
+                </div>
+              ))
+            }
+          </dl>
+          <p class="vs__checked">
+            What this page says about {other} was last checked in {checked}. Pricing and features
+            change. If something here is out of date, tell us at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          </p>
+        </div>
+      </section>
 
-      <p class="vs__checked">
-        What this page says about {other} was last checked in {checked}. Pricing and features
-        change — if something here is out of date, tell us at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-      </p>
-
-      <h2>Try NoMail</h2>
-      <p>Free, for {MIN_MACOS} or later. It runs alongside whatever you use today.</p>
-      <p><a class="btn btn--primary" href={withBase("/download/")}>Download NoMail</a></p>
+      <section class="vs__part vs__try">
+        <h2>Try NoMail</h2>
+        <div class="vs__try-body">
+          <p>Free, for {MIN_MACOS} or later. It runs alongside whatever you use today.</p>
+          <a class="btn btn--primary" href={withBase("/download/")}>Download NoMail</a>
+        </div>
+      </section>
     </article>
   </div>
 </Base>
 
 <style>
-  .vs {
-    margin-block: var(--space-8);
+  .vs__intro :global(p) {
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    max-width: 60ch;
+    color: var(--color-ink-2);
   }
 
-  .vs .faq__item:first-child {
+  .vs__glance h2 {
+    margin-bottom: var(--space-lg);
+    font-size: var(--text-title);
+    line-height: 1.2;
+  }
+
+  .vs__scroll {
+    overflow-x: auto;
+  }
+
+  .vs__table {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .vs__table th,
+  .vs__table td {
+    padding: var(--space-md) var(--space-lg) var(--space-md) 0;
+    vertical-align: top;
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .vs__table thead th {
+    padding-block: var(--space-sm);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+    color: var(--color-ink);
+    font-size: var(--text-title);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .vs__table thead th:first-child,
+  .vs__table tbody th {
+    width: 22%;
+  }
+
+  .vs__table tbody th {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .vs__table td {
+    color: var(--color-ink-2);
+  }
+
+  .vs__part {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-md) var(--gap-columns);
+    margin-top: var(--section-gap-s);
+    padding-top: var(--space-xl);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    max-width: none;
+  }
+
+  .vs__part h2 {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: var(--text-title);
+    line-height: 1.2;
+  }
+
+  .vs__part > :global(ul),
+  .vs__part > p {
+    margin: 0;
+  }
+
+  .vs__part :global(.faq__item) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vs__part :global(.faq__item:first-child) {
     border-top: 0;
+    padding-top: 0;
   }
 
   .vs__checked {
-    color: var(--nm-fg-secondary);
-    font-size: 0.9375rem;
+    margin-top: var(--space-lg);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .vs__try-body {
+    display: grid;
+    gap: var(--space-lg);
+    justify-items: start;
+  }
+
+  @media (max-width: 60rem) {
+    .vs__part {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .vs__table {
+      min-width: 0;
+    }
+
+    .vs__table thead {
+      display: none;
+    }
+
+    .vs__table tr,
+    .vs__table th,
+    .vs__table td,
+    .vs__table tbody th {
+      display: block;
+      width: auto;
+    }
+
+    .vs__table tr {
+      padding-block: var(--space-md);
+      border-bottom: var(--rule-hair) solid var(--color-rule);
+    }
+
+    .vs__table tbody th,
+    .vs__table td {
+      padding: var(--space-2xs) 0;
+      border: 0;
+    }
+
+    .vs__table td::before {
+      content: attr(data-label) ": ";
+      color: var(--color-muted);
+    }
   }
 </style>

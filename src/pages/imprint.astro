@@ -12,8 +12,8 @@ const CITY = "1180 Wien";
   title="Imprint — NoMail app"
   description="Legal disclosure (Impressum) for NoMail, the macOS email client."
 >
-  <div class="container narrow">
-    <article class="prose">
+  <div class="container page">
+    <article class="prose imprint">
       <h1>Imprint</h1>
       <p>Information in accordance with §&nbsp;5 ECG (Austria).</p>
 
@@ -41,11 +41,8 @@ const CITY = "1180 Wien";
 </Base>
 
 <style>
-  .narrow {
-    max-width: 720px;
-  }
-
-  .prose {
-    margin-block: var(--space-8);
+  .imprint h1 {
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
   }
 </style>

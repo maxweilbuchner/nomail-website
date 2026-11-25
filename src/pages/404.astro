@@ -16,7 +16,7 @@ const links = [
   description="That page doesn’t exist. Head back to NoMail, the local-first email client for macOS."
   noindex
 >
-  <div class="container narrow">
+  <div class="container page">
     <div class="notfound">
       <p class="notfound__code">404</p>
       <h1>This page doesn’t exist.</h1>
@@ -24,46 +24,37 @@ const links = [
         The link may be out of date, or the page may have moved. Everything the site has:
       </p>
       <nav class="notfound__links" aria-label="Site">
-        {links.map((link) => <a href={link.href}>{link.label}</a>)}
+        {links.map((link) => <a class="btn" href={link.href}>{link.label}</a>)}
       </nav>
     </div>
   </div>
 </Base>
 
 <style>
-  .narrow {
-    max-width: 720px;
-  }
-
   /* The shortest page on the site: without a floor the footer strands itself
      halfway up the viewport. */
   .notfound {
-    margin-block: var(--space-8);
-    min-height: 42vh;
+    display: grid;
+    gap: var(--space-lg);
+    align-content: start;
+    min-height: 50svh;
   }
 
   .notfound__code {
-    font-family: var(--nm-font-mono);
-    font-size: 0.875rem;
-    letter-spacing: 0.12em;
-    color: var(--nm-fg-faint);
-    margin: 0 0 var(--space-3);
+    font-size: var(--text-display);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-accent);
   }
 
   .notfound__lead {
-    color: var(--nm-fg-secondary);
-    font-size: 1.0625rem;
-    margin-block: var(--space-4) var(--space-5);
+    color: var(--color-ink-2);
+    font-size: var(--text-lead);
   }
 
   .notfound__links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4) var(--space-5);
-  }
-
-  .notfound__links a {
-    font-size: 0.9375rem;
-    font-weight: 550;
+    gap: var(--space-xs);
   }
 </style>

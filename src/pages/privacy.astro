@@ -7,7 +7,7 @@ import { Content as Privacy } from "../content/PRIVACY.md";
   title="NoMail Privacy Policy — no backend, no tracking"
   description="NoMail runs entirely on your Mac: no backend, no accounts system, no servers your mail passes through, and no analytics."
 >
-  <div class="container">
+  <div class="container page">
     <article class="prose privacy">
       <Privacy />
     </article>
@@ -15,7 +15,8 @@ import { Content as Privacy } from "../content/PRIVACY.md";
 </Base>
 
 <style>
-  .privacy {
-    margin-block: var(--space-8);
+  .privacy :global(h1) {
+    padding-bottom: var(--space-xl);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
   }
 </style>

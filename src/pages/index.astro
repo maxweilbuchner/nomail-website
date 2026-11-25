@@ -1,7 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
 import Shot from "../components/Shot.astro";
+import DownloadButtons from "../components/DownloadButtons.astro";
 import { withBase } from "../lib/url";
+import { MIN_MACOS } from "../config";
 import rawChangelog from "../content/CHANGELOG.md?raw";
 import { parseChangelog } from "../lib/render-changelog";
 import { graph, organization, website, softwareApplication } from "../lib/schema";
@@ -15,12 +17,81 @@ import menuLight from "../assets/shots/menu-light.png";
 import inviteLight from "../assets/shots/invite-card-light.png";
 import codeLight from "../assets/shots/login-code-light.png";
 
+// Each moment carries the app's own default shortcut for it (inboxCommands.ts
+// in the app: "g i" Go to Inbox, "c" Compose, "mod+k" Command menu, "t"
+// Calendar invite), so the tour teaches keys that work in NoMail. Sign-in
+// codes have no shortcut in the app, so that row takes none here either.
+// Formatted like the app's formatBinding: "mod+k" → "⌘K", "g i" → "G then I".
+const label = (k: string) => (k === "mod+k" ? "⌘K" : k.toUpperCase());
+const chip = (keys: readonly string[]) => keys.map(label).join(" then ");
+
+// The tour: five moments, one capture each, cropped to the part that does the
+// work. Crops are fractions of the 2720×1600 capture and share one aspect
+// ratio (h = w × 1.0625 → 1.6:1) so the panel never jumps between tabs.
+const tour = [
+  {
+    id: "views",
+    keys: ["g", "i"],
+    tab: "Views",
+    title: "Views, not folders",
+    body: "Filter, group and sort mail the way you’d query a database. Save a result as a view, pin it to a split inbox, and let low-priority mail skip the inbox.",
+    note: "Follow-ups keeps everything still waiting on a reply.",
+    shot: splitLight,
+    crop: { x: 0.17, y: 0.1, w: 0.55, h: 0.584 },
+    alt: "A split inbox: a pinned Team section above the day-grouped stream, with labels and an extracted sign-in code on the rows",
+  },
+  {
+    id: "compose",
+    keys: ["c"],
+    tab: "Compose",
+    title: "Compose in Markdown",
+    body: "A block editor that speaks Markdown: type the shortcut and it becomes a heading, list, to-do, quote or code block.",
+    note: "Snippets, signatures, scheduled send and undo-send. Composers pop out into their own windows.",
+    shot: composeLight,
+    crop: { x: 0.52, y: 0.46, w: 0.48, h: 0.51 },
+    alt: "The composer with a rich draft: heading, bold and colored text, a checked to-do list, a quote and a code block",
+  },
+  {
+    id: "keys",
+    keys: ["mod+k"],
+    tab: "Commands",
+    title: "Keyboard-first, wait-free",
+    body: "Every action has a shortcut, and the ⌘K menu reaches all of them. Triage runs against your local database in milliseconds and syncs behind you.",
+    note: "Offline included.",
+    shot: menuLight,
+    crop: { x: 0.25, y: 0.1, w: 0.5, h: 0.531 },
+    alt: "The ⌘K command menu open over the inbox, listing actions with their shortcuts",
+  },
+  {
+    id: "invites",
+    keys: ["t"],
+    tab: "Invites",
+    title: "Meetings, handled in-line",
+    body: "Calendar invites render as cards in the thread. RSVP from the card and the event lands in your Google Calendar.",
+    note: null,
+    shot: inviteLight,
+    crop: { x: 0.41, y: 0.17, w: 0.56, h: 0.595 },
+    alt: "A calendar invite card in a thread, with Yes, Maybe and No RSVP buttons",
+  },
+  {
+    id: "codes",
+    keys: [],
+    tab: "Codes",
+    title: "Sign-in codes, one click",
+    body: "Verification codes surface on the list row and in the reading pane, copied with one click before the sender’s email even loads.",
+    note: null,
+    shot: codeLight,
+    crop: { x: 0.41, y: 0.17, w: 0.56, h: 0.595 },
+    alt: "A verification mail with the login code extracted into a Copy pill above the message",
+  },
+] as const;
+
 const also = [
-  ["Instant search", "Local full-text search merged with server results — live while you triage."],
+  ["Instant search", "Local full-text search, merged with server results as you type."],
   ["Multi-account", "Gmail, Outlook, Fastmail, iCloud and IMAP side by side, with a combined inbox."],
-  ["Snooze & reminders", "Snooze threads, get reminded when nobody replies — armed right from the composer."],
-  ["Snippets", "Reusable text blocks with {{variables}} that fill in as you insert them."],
-  ["Undo everything", "Optimistic writes through a durable outbox — undo-send included."],
+  ["Snooze and reminders", "Snooze threads; get reminded when nobody replies, armed from the composer."],
+  ["Snippets", "Reusable text with {{variables}} that fill in as you insert them."],
+  ["Undo everything", "Optimistic writes through a durable outbox, undo-send included."],
   ["One-click unsubscribe", "RFC 8058 unsubscribe straight from the list row."],
 ] as const;
 
@@ -30,26 +101,37 @@ const also = [
 const trust = [
   {
     title: "No backend",
-    body: `NoMail has no servers. Your mail moves between your Mac and your provider — nowhere else. See our <a href="${withBase("/privacy/")}">privacy policy</a>.`,
+    body: `NoMail has no servers. Read the <a href="${withBase("/privacy/")}">privacy policy</a>.`,
   },
   {
     title: "On-device AI",
-    body: `Auto-labels that learn from how you file mail and thread summaries run a bundled local model. Nothing leaves the machine unless you opt into an external provider with your own key — the <a href="${withBase("/support/")}">FAQ</a> covers the details.`,
+    body: `Auto-labels and thread summaries run a bundled local model. External providers are opt-in, with your own key: see the <a href="${withBase("/support/")}">FAQ</a>.`,
   },
   {
-    title: "Signed & notarized",
-    body: "Developer ID signed, notarized by Apple, and auto-updating — release notes shown in-app.",
+    title: "Signed and notarized",
+    body: "Developer ID signed, notarized by Apple, and auto-updating, with release notes in-app.",
   },
   {
     title: "Fair Source",
-    body: "Licensed FSL-1.1-ALv2: read, run, and modify the code — and each release becomes plain Apache 2.0 two years after it ships.",
+    body: "FSL-1.1-ALv2: read, run and modify the code. Each release becomes Apache 2.0 two years after it ships.",
   },
 ] as const;
 
-// Slot widths inside the 1080px container, so each shot picks a srcset
-// candidate for the box it actually fills rather than the whole page.
-const FEATURE_SIZES = "(max-width: 800px) 100vw, 580px";
-const DUO_SIZES = "(max-width: 800px) 100vw, 500px";
+const macs = [
+  { label: "macOS", silicon: `${MIN_MACOS} or later`, intel: `${MIN_MACOS} or later` },
+  { label: "Mail, views, composer", silicon: "Everything", intel: "Everything" },
+  {
+    label: "On-device AI",
+    silicon: "Yes, after a one-time ~3.5&nbsp;GB model download",
+    intel: "No: bring your own API key, or run without AI",
+  },
+  { label: "Updates", silicon: "In-app, every six hours", intel: "In-app, every six hours" },
+] as const;
+
+// Each tour capture renders wider than its frame (the crop), so the srcset
+// is picked for the whole image's width: about frame ÷ crop width.
+const TOUR_SIZES = "(max-width: 60rem) 200vw, 1740px";
+const CLOSE_SIZES = "(max-width: 60rem) 190vw, 1390px";
 
 // The advertised version tracks the newest changelog entry, which the release
 // pipeline syncs — so it never goes stale by hand.
@@ -62,278 +144,622 @@ const schema = graph(
 ---
 
 <Base schema={schema}>
-  <div class="container">
-    <section class="hero">
-      <h1>Your inbox is a database.</h1>
-      <p class="hero__sub">
-        NoMail is a keyboard-first, local-first email client for macOS — custom views with
-        filters, grouping, and sorting, a Markdown block editor for composing, and
-        on-device AI that never sends your mail anywhere.
-      </p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href={withBase("/download/")}>Download for macOS</a>
-        <a class="btn btn--secondary" href={withBase("/changelog/")}>What’s new</a>
+  <section class="hero">
+    <div class="container">
+      <div class="hero__top">
+        <h1>Your inbox is a database.</h1>
+        <div class="hero__act">
+          <p class="lead">A keyboard-first, local-first email client for the Mac.</p>
+          <DownloadButtons />
+          <p class="hero__more">
+            Free, for {MIN_MACOS} or later. <a href={withBase("/changelog/")}>What’s new</a>
+          </p>
+        </div>
       </div>
-      <div class="hero__shot">
-        <Shot
-          light={heroLight}
-          dark={heroDark}
-          alt="NoMail — split inbox with pinned sections and an open conversation carrying a calendar invite"
-          priority
-        />
-      </div>
-    </section>
+      <Shot
+        class="hero__shot"
+        light={heroLight}
+        dark={heroDark}
+        fill
+        alt="NoMail: a split inbox with pinned sections and an open conversation carrying a calendar invite"
+        priority
+      />
+    </div>
+  </section>
 
-    <section class="feature section">
-      <div class="feature__text">
-        <h2>Views, not folders</h2>
-        <p>
-          Filter, group, and sort your mail the way you'd query a database. Save any result as
-          a named view, pin it as a section of a split inbox, and let low-priority mail skip
-          the inbox entirely. A built-in Follow-ups view keeps everything still waiting on a
-          reply in one place.
+  <section class="tour" id="tour" aria-labelledby="tour-head">
+    <div class="container">
+      <div class="tour__head">
+        <h2 id="tour-head">
+          <span class="tour__keys">Press C. Then ⌘K.</span>
+          <span class="tour__touch">The app, view by view.</span>
+        </h2>
+        <p class="lead">
+          <span class="tour__keys">The keys you’ll use in the app work on this page too.</span>
+          <span class="tour__touch">Tap a view. On a Mac keyboard, try the keys beside each.</span>
         </p>
       </div>
-      <Shot light={splitLight} sizes={FEATURE_SIZES} alt="A split inbox: pinned Team section above the day-grouped stream, with labels and an extracted sign-in code on the rows" />
-    </section>
-
-    <section class="feature feature--flip section">
-      <div class="feature__text">
-        <h2>Compose in Markdown</h2>
-        <p>
-          A real block editor that speaks Markdown: type the shortcut and it becomes a
-          heading, list, to-do, quote, or code block. Colors and a slash menu too. Snippets
-          with variables, signatures, scheduled send, and undo-send. Composers pop out into
-          their own windows and back.
-        </p>
+      <div class="tour__body">
+        <div class="tour__tabs" role="tablist" aria-label="NoMail tour" aria-orientation="vertical" hidden>
+          {
+            tour.map((t, i) => (
+              <button
+                type="button"
+                role="tab"
+                class="tour__tab"
+                id={`tab-${t.id}`}
+                aria-controls={`panel-${t.id}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                aria-keyshortcuts={t.keys.length ? t.keys.map((k) => (k === "mod+k" ? "Meta+K" : k.toUpperCase())).join(" ") : undefined}
+                data-keys={t.keys.join(" ")}
+                tabindex={i === 0 ? 0 : -1}
+              >
+                <span class="tour__label">{t.tab}</span>
+                {t.keys.length > 0 && <kbd class="kbd tour__kbds">{chip(t.keys)}</kbd>}
+              </button>
+            ))
+          }
+        </div>
+        <div class="tour__panels">
+          {
+            tour.map((t) => (
+              <div class="tour__panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`}>
+                <Shot light={t.shot} crop={t.crop} sizes={TOUR_SIZES} alt={t.alt} />
+                <div class="tour__text">
+                  <h3>{t.title}</h3>
+                  <div class="tour__copy">
+                    <p>{t.body}</p>
+                    {t.note && <p class="muted">{t.note}</p>}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </div>
-      <Shot light={composeLight} dark={composeDark} sizes={FEATURE_SIZES} alt="The pop-out composer with a rich draft: heading, bold and colored text, a checked to-do list, a quote, and a code block" />
-    </section>
+    </div>
+  </section>
 
-    <section class="feature section">
-      <div class="feature__text">
-        <h2>Keyboard-first, wait-free</h2>
-        <p>
-          Every action has a shortcut, and everything is reachable from the ⌘K command menu.
-          Because NoMail is local-first, nothing waits on the network: triage happens against
-          your local database in milliseconds and syncs behind you — offline included.
-        </p>
-      </div>
-      <Shot light={menuLight} sizes={FEATURE_SIZES} alt="The ⌘K command menu open over the inbox, listing actions with their shortcuts" />
-    </section>
-
-    <section class="duo section">
-      <div class="duo__item">
-        <h3>Meetings, handled in-line</h3>
-        <p>
-          Calendar invites render as cards in the thread. RSVP from the card and the event
-          lands in your Google Calendar.
-        </p>
-        <Shot light={inviteLight} sizes={DUO_SIZES} alt="A calendar invite card in a thread, with Yes / Maybe / No RSVP buttons" />
-      </div>
-      <div class="duo__item">
-        <h3>Sign-in codes, one click</h3>
-        <p>
-          Verification codes are detected and surfaced on the list row and in the reading
-          pane — copied with one click, before the sender’s email even loads.
-        </p>
-        <Shot light={codeLight} sizes={DUO_SIZES} alt="A verification mail with the login code extracted into a Copy pill above the message" />
-      </div>
-    </section>
-
-    <section class="also section">
-      <h2>And the rest of a serious mail client</h2>
-      <ul class="also__grid">
+  <section class="rest" aria-labelledby="rest-head">
+    <div class="container">
+      <h2 id="rest-head">Search, snooze, snippets, undo.</h2>
+      <dl class="rest__rows">
         {
           also.map(([title, body]) => (
-            <li>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </li>
+            <div class="rest__row">
+              <dt>{title}</dt>
+              <dd>{body}</dd>
+            </div>
           ))
         }
-      </ul>
-    </section>
+      </dl>
+    </div>
+  </section>
 
-    <section class="trust section">
-      <h2>Built to be trusted with your mail</h2>
-      <div class="trust__grid">
+  <section class="trust" aria-labelledby="trust-head">
+    <div class="container">
+      <h2 id="trust-head" class="trust__statement">
+        Your mail goes between your Mac and your provider. Nowhere else.
+      </h2>
+      <dl class="trust__grid">
         {
-          trust.map((card) => (
-            <article class="trust__card">
-              <h3>{card.title}</h3>
-              <p set:html={card.body} />
-            </article>
+          trust.map((item) => (
+            <div class="trust__item">
+              <dt>{item.title}</dt>
+              <dd set:html={item.body} />
+            </div>
           ))
         }
-      </div>
-    </section>
+      </dl>
+    </div>
+  </section>
 
-    <section class="cta section">
-      <h2>Try NoMail</h2>
-      <p>Free download for macOS — Apple Silicon and Intel. Signed, notarized, auto-updating.</p>
-      <a class="btn btn--primary" href={withBase("/download/")}>Download for macOS</a>
-    </section>
-  </div>
+  <section class="macs" aria-labelledby="macs-head">
+    <div class="container">
+      <h2 id="macs-head">Every Mac since {MIN_MACOS}.</h2>
+        <table class="macs__table">
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Feature</span></th>
+              <th scope="col">Apple Silicon</th>
+              <th scope="col">Intel</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              macs.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  <td data-label="Apple Silicon" set:html={row.silicon} />
+                  <td data-label="Intel" set:html={row.intel} />
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="close-head">
+    <div class="container close__grid">
+      <div class="close__text">
+        <h2 id="close-head">It runs alongside whatever you use today.</h2>
+        <p class="lead">Free for macOS, Apple Silicon and Intel.</p>
+        <a class="btn btn--primary close__btn" href={withBase("/download/")}>Download for macOS</a>
+      </div>
+      <Shot
+        light={composeLight}
+        dark={composeDark}
+        crop={{ x: 0.45, y: 0.42, w: 0.55, h: 0.58 }}
+        sizes={CLOSE_SIZES}
+        alt="The composer open over the inbox on a rich draft: heading, colored text, to-dos and a code block"
+      />
+    </div>
+  </section>
 </Base>
 
+<script>
+  // The tour's tabs. Without this script every panel shows in order and the
+  // tab row stays hidden; with it, one panel shows at a time and the number
+  // keys 1 to 5 switch them, like the app's own single-key shortcuts.
+  const tablist = document.querySelector<HTMLElement>(".tour__tabs");
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".tour__tab"));
+  const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")!)!);
+
+  const select = (index: number, focus = false) => {
+    tabs.forEach((tab, i) => {
+      const on = i === index;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      panels[i].hidden = !on;
+    });
+    if (focus) tabs[index].focus();
+  };
+
+  if (tablist && tabs.length) {
+    tablist.hidden = false;
+    select(0);
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(i));
+      tab.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") select((i + 1) % tabs.length, true);
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp")
+          select((i - 1 + tabs.length) % tabs.length, true);
+        else if (e.key === "Home") select(0, true);
+        else if (e.key === "End") select(tabs.length - 1, true);
+        else return;
+        e.preventDefault();
+      });
+    });
+
+    // Number keys drive the tour only while it is on screen, so they never
+    // act on a part of the page the visitor can't see.
+    let inView = false;
+    new IntersectionObserver(([entry]) => (inView = entry.isIntersecting), {
+      threshold: 0.25,
+    }).observe(document.getElementById("tour")!);
+
+    // Each tab carries its key sequence in data-keys: one key ("c"), a
+    // modifier combo ("mod+k"), or a two-key chord ("g i") typed within 1.5s,
+    // the way the app arms its go-to chords.
+    const sequences = tabs.map((t) => (t.dataset.keys ? t.dataset.keys.split(" ") : []));
+    let armed: { key: string; at: number } | null = null;
+
+    document.addEventListener("keydown", (e) => {
+      if (!inView || e.altKey || e.shiftKey) return;
+      const target = e.target as HTMLElement;
+      if (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      const mod = e.metaKey || e.ctrlKey;
+      const token = mod ? (e.key.toLowerCase() === "k" ? "mod+k" : null) : e.key.toLowerCase();
+      if (!token) return;
+
+      const now = Date.now();
+      const prev = armed && now - armed.at < 1500 ? armed.key : null;
+      armed = null;
+      const hit = sequences.findIndex((seq) =>
+        seq.length === 2 ? prev === seq[0] && token === seq[1] : seq.length === 1 && seq[0] === token,
+      );
+      if (hit >= 0) {
+        if (mod) e.preventDefault();
+        select(hit);
+        return;
+      }
+      if (sequences.some((seq) => seq.length === 2 && seq[0] === token)) armed = { key: token, at: now };
+    });
+  }
+</script>
+
 <style>
+  /* ---------- Hero: the download beside the inbox (Counter) ---------- */
+
   .hero {
-    text-align: center;
-    padding-top: var(--space-8);
+    padding-top: var(--space-2xl);
+  }
+
+  .hero__top {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-lg) var(--gap-columns);
+    align-items: start;
+    margin-bottom: var(--space-xl);
   }
 
   .hero h1 {
-    margin-inline: auto;
-    max-width: 16ch;
+    max-width: 12ch;
   }
 
-  .hero__sub {
-    margin: var(--space-4) auto 0;
-    max-width: 56ch;
-    color: var(--nm-fg-secondary);
-    font-size: 1.125rem;
-  }
-
-  .hero__actions {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-3);
-    margin-top: var(--space-6);
-  }
-
-  .hero__shot {
-    margin-top: var(--space-8);
-  }
-
-  .feature {
+  .hero__act {
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: var(--space-7);
-    align-items: center;
+    gap: var(--space-md);
+    justify-items: start;
+    padding-top: var(--space-xs);
   }
 
-  .feature--flip .feature__text {
-    order: 2;
+  .hero__act .lead {
+    color: var(--color-muted);
   }
 
-  .feature__text h2 {
-    margin-bottom: var(--space-3);
+  .hero__more {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
 
-  .feature__text p {
-    color: var(--nm-fg-secondary);
-    margin: 0;
+  /* The app window at about its real size, cropped at the fold. */
+  .hero :global(.hero__shot) {
+    height: clamp(320px, calc(100svh - 400px), 680px);
   }
 
-  .duo {
+  /* ---------- Tour: the app's sidebar beside a window (Switcher) ---------- */
+
+  .tour {
+    padding-top: var(--section-gap);
+  }
+
+  .tour__head {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-7);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-md) var(--gap-columns);
+    align-items: end;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .tour__head .lead {
+    color: var(--color-muted);
+  }
+
+  .tour__touch {
+    display: none;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .tour__keys,
+    .tour__kbds {
+      display: none;
+    }
+
+    .tour__touch {
+      display: inline;
+    }
+  }
+
+  .tour__body {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: var(--gap-columns);
     align-items: start;
   }
 
-  .duo__item h3 {
-    margin-bottom: var(--space-2);
+  .tour__body:has(> .tour__tabs[hidden]) {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .duo__item p {
-    color: var(--nm-fg-secondary);
-    margin: 0 0 var(--space-4);
-    min-height: 3lh;
-  }
-
-  .also h2,
-  .trust h2 {
-    text-align: center;
-    margin-bottom: var(--space-6);
-  }
-
-  .also__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* A sidebar view list: the row shades on hover, the open one stays shaded,
+     the shortcut sits at the row's end, as in the app. */
+  .tour__tabs {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-5) var(--space-6);
+    gap: var(--space-3xs);
+    padding: var(--space-xs);
+    border-radius: var(--radius-lg);
+    background: var(--color-paper-2);
+    position: sticky;
+    top: var(--space-3xl);
   }
 
-  .also__grid h3 {
-    font-size: 1rem;
-    margin-bottom: var(--space-1);
+  .tour__tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    min-height: 44px;
+    padding: 0 var(--space-xs) 0 var(--space-sm);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-ink-2);
+    font: 500 var(--text-md) / 1 var(--font-body);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color var(--dur-micro) var(--ease-out);
   }
 
-  .also__grid p {
+  .tour__tab:hover {
+    background: var(--color-hover);
+  }
+
+  .tour__tab:active,
+  .tour__tab[aria-selected="true"] {
+    background: var(--color-active);
+    color: var(--color-ink);
+  }
+
+  .tour__tab[aria-selected="true"] {
+    font-weight: 700;
+  }
+
+  .tour__tab[aria-selected="true"] .kbd {
+    background: transparent;
+    border-color: var(--color-rule-strong);
+  }
+
+  .tour__tab:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+  }
+
+  .tour__panel {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .tour__panels {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .tour__text {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 5fr);
+    gap: var(--space-sm) var(--gap-columns);
+    align-items: baseline;
+  }
+
+  .tour__text h3 {
+    font-size: var(--text-xl);
+  }
+
+  .tour__copy {
+    display: grid;
+    gap: var(--space-xs);
+    color: var(--color-ink-2);
+  }
+
+  /* ---------- The rest (Rows) ---------- */
+
+  .rest {
+    padding-top: var(--section-gap-l);
+  }
+
+  .rest h2 {
+    max-width: 22ch;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .rest__rows {
     margin: 0;
-    color: var(--nm-fg-secondary);
-    font-size: 0.9375rem;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .rest__row {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xs) var(--gap-columns);
+    align-items: baseline;
+    padding-block: var(--space-lg);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .rest__row dt {
+    font-size: var(--text-title);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .rest__row dd {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Trust (the sidebar-gray band) ---------- */
+
+  .trust {
+    margin-top: var(--section-gap);
+    padding-block: var(--section-gap-s);
+    background: var(--color-paper-2);
+    border-block: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .trust__statement {
+    max-width: 24ch;
+    font-size: var(--text-display-s);
+    margin-bottom: var(--space-2xl);
   }
 
   .trust__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-4);
-  }
-
-  .trust__card {
-    border: 1px solid var(--nm-border);
-    border-radius: var(--nm-radius-lg);
-    background: var(--nm-bg-card);
-    padding: var(--space-5);
-  }
-
-  .trust__card h3 {
-    font-size: 1rem;
-    margin-bottom: var(--space-2);
-  }
-
-  .trust__card p {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-xl) var(--gap-columns);
     margin: 0;
-    color: var(--nm-fg-secondary);
-    font-size: 0.9375rem;
   }
 
-  .cta {
-    text-align: center;
-    padding: var(--space-8) var(--space-5);
-    border: 1px solid var(--nm-border);
-    border-radius: var(--nm-radius-lg);
-    background: var(--nm-bg-sidebar);
+  .trust__item {
+    display: grid;
+    align-content: start;
+    gap: var(--space-xs);
+    padding-top: var(--space-md);
+    border-top: var(--rule-hair) solid var(--color-rule-strong);
   }
 
-  .cta p {
-    color: var(--nm-fg-secondary);
-    margin: var(--space-3) 0 var(--space-5);
+  .trust__item dt {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
-  @media (max-width: 800px) {
-    .feature,
-    .duo,
+  .trust__item dd {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* The link blue drops under 4.5:1 on the sidebar gray; ink with an
+     underline reads as a link there. */
+  .trust__item dd :global(a) {
+    color: var(--color-ink);
+    text-decoration: underline;
+  }
+
+  /* ---------- Which Mac (Table) ---------- */
+
+  .macs {
+    padding-top: var(--section-gap);
+  }
+
+  .macs h2 {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .macs__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .macs__table th,
+  .macs__table td {
+    padding: var(--space-lg) var(--space-lg) var(--space-lg) 0;
+    vertical-align: baseline;
+    border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .macs__table thead th {
+    padding-block: var(--space-sm);
+    border-bottom-color: var(--color-rule-strong);
+    color: var(--color-ink);
+    font-size: var(--text-title);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .macs__table thead th:first-child,
+  .macs__table tbody th {
+    width: 30%;
+  }
+
+  .macs__table tbody th {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .macs__table td {
+    color: var(--color-ink-2);
+  }
+
+  /* ---------- Close (Split) ---------- */
+
+  .close {
+    padding-top: var(--section-gap-l);
+  }
+
+  .close__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-2xl) var(--gap-columns);
+    align-items: center;
+  }
+
+  .close__text {
+    display: grid;
+    gap: var(--space-lg);
+    justify-items: start;
+  }
+
+  .close__text .lead {
+    color: var(--color-muted);
+  }
+
+  .close__btn {
+    min-height: 48px;
+    padding: 0 var(--space-lg);
+    font-size: var(--text-md);
+  }
+
+  /* ---------- Small screens ---------- */
+
+  @media (max-width: 60rem) {
+    .hero__top,
+    .tour__head,
+    .tour__body,
+    .tour__text,
+    .rest__row,
+    .close__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero :global(.hero__shot) {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+
+    /* A phone shows the sidebar and the list at a readable size, not the
+       whole window shrunk to a stamp. */
+    .hero :global(.hero__shot img) {
+      width: 230%;
+      height: auto;
+    }
+
     .trust__grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .also__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .feature--flip .feature__text {
-      order: 0;
-    }
-
-    .duo__item p {
-      min-height: auto;
+    .tour__tabs {
+      position: static;
     }
   }
 
-  @media (max-width: 520px) {
-    .also__grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 40rem) {
+    .trust__grid {
+      grid-template-columns: minmax(0, 1fr);
     }
 
-    .hero__actions {
-      flex-direction: column;
-      align-items: center;
+    /* Each row becomes a labelled block, so the feature and both answers
+       stay on screen without a sideways scroll. */
+    .macs__table thead {
+      display: none;
+    }
+
+    .macs__table tr,
+    .macs__table th,
+    .macs__table td,
+    .macs__table tbody th {
+      display: block;
+      width: auto;
+    }
+
+    .macs__table tr {
+      padding-block: var(--space-md);
+      border-bottom: var(--rule-hair) solid var(--color-rule);
+    }
+
+    .macs__table tbody th,
+    .macs__table td {
+      padding: var(--space-2xs) 0;
+      border: 0;
+    }
+
+    .macs__table td::before {
+      content: attr(data-label) ": ";
+      color: var(--color-muted);
     }
   }
 </style>

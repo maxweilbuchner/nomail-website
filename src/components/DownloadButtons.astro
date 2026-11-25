@@ -14,7 +14,7 @@ import { DOWNLOAD_ARM64, DOWNLOAD_X64 } from "../config";
   </a>
   <p class="dl__detected" id="dl-detected" hidden>Detected: Intel Mac</p>
   <p class="dl__alts">
-    Direct downloads: <a href={DOWNLOAD_ARM64}>Apple Silicon</a> · <a href={DOWNLOAD_X64}>Intel</a>
+    Direct downloads: <a href={DOWNLOAD_ARM64}>Apple Silicon</a> or <a href={DOWNLOAD_X64}>Intel</a>
   </p>
 </div>
 
@@ -65,23 +65,18 @@ import { DOWNLOAD_ARM64, DOWNLOAD_X64 } from "../config";
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-3);
+    gap: var(--space-sm);
   }
 
   .dl__primary {
-    font-size: 1.0625rem;
-    padding: 13px 26px;
+    min-height: 48px;
+    padding: 0 var(--space-lg);
+    font-size: var(--text-md);
   }
 
-  .dl__detected {
-    margin: 0;
-    color: var(--nm-fg-faint);
-    font-size: 0.875rem;
-  }
-
+  .dl__detected,
   .dl__alts {
-    margin: 0;
-    color: var(--nm-fg-secondary);
-    font-size: 0.9375rem;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
 </style>

@@ -3,21 +3,35 @@ import icon from "../assets/icon.svg";
 import { withBase } from "../lib/url";
 
 const nav = [
-  { href: "/download/", label: "Download" },
   { href: "/changelog/", label: "Changelog" },
   { href: "/support/", label: "Support" },
 ];
+
+const path = Astro.url.pathname;
 ---
 
 <header class="header">
-  <div class="container header__inner">
-    <a class="header__brand" href={withBase("/")}>
-      <img src={icon.src} alt="" width="28" height="28" />
-      <span>NoMail</span>
-    </a>
-    <nav class="header__nav" aria-label="Main">
-      {nav.map((item) => <a href={withBase(item.href)}>{item.label}</a>)}
-    </nav>
+  <div class="container">
+    <div class="header__bar">
+      <a class="header__brand" href={withBase("/")} aria-label="NoMail home">
+        <img src={icon.src} alt="" width="28" height="28" />
+        <span>NoMail</span>
+      </a>
+      <nav class="header__nav" aria-label="Main">
+        {
+          nav.map((item) => (
+            <a
+              class="header__link"
+              href={withBase(item.href)}
+              aria-current={path.startsWith(withBase(item.href)) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <a class="btn header__download" href={withBase("/download/")}>Download</a>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -25,47 +39,86 @@ const nav = [
   .header {
     position: sticky;
     top: 0;
-    z-index: 10;
-    background: color-mix(in srgb, var(--nm-bg) 82%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--nm-border);
+    z-index: var(--z-sticky-nav);
+    padding-top: var(--space-sm);
   }
 
-  .header__inner {
+  /* The app's popover surface: card background, hairline, popover shadow. */
+  .header__bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 56px;
+    gap: var(--space-md);
+    min-height: 60px;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
+    border: var(--rule-hair) solid var(--color-rule);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-paper-3) 88%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-popover);
   }
 
   .header__brand {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    color: var(--nm-fg);
-    font-weight: 650;
-    font-size: 1.0625rem;
+    gap: var(--space-sm);
+    color: var(--color-ink);
+    font-weight: 700;
+    font-size: var(--text-md);
     letter-spacing: -0.01em;
+    text-decoration: none;
+    flex-shrink: 0;
   }
 
   .header__brand:hover {
     text-decoration: none;
   }
 
+  .header__brand img {
+    flex-shrink: 0;
+  }
+
   .header__nav {
     display: flex;
-    gap: var(--space-5);
+    align-items: center;
+    gap: var(--space-2xs);
+    min-width: 0;
   }
 
-  .header__nav a {
-    color: var(--nm-fg-secondary);
-    font-size: 0.9375rem;
+  .header__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-sm);
+    border-radius: var(--radius-md);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
     font-weight: 500;
+    text-decoration: none;
+    transition: background-color var(--dur-micro) var(--ease-out);
   }
 
-  .header__nav a:hover {
-    color: var(--nm-fg);
+  .header__link:hover {
+    background: var(--color-hover);
+    color: var(--color-ink);
     text-decoration: none;
+  }
+
+  .header__link[aria-current="page"] {
+    background: var(--color-active);
+    color: var(--color-ink);
+  }
+
+  .header__download {
+    margin-left: var(--space-xs);
+  }
+
+  /* Phones keep the name and the download; Changelog and Support live in
+     the footer there. */
+  @media (max-width: 40rem) {
+    .header__link {
+      display: none;
+    }
   }
 </style>

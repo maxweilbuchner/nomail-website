@@ -41,6 +41,7 @@ const ogImage = new URL(withBase("/og.png"), Astro.site);
     {/* Google's favicon crawler and older browsers want a raster fallback. */}
     <link rel="icon" href={withBase("/icon.png")} type="image/png" sizes="512x512" />
     <link rel="apple-touch-icon" href={withBase("/icon.png")} />
+    {/* The paper in each scheme (tokens.css), as hex: meta tags take no var(). */}
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content="website" />

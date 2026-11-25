@@ -15,7 +15,7 @@ const faq = [
   },
   {
     q: "Why is there no on-device AI on Intel Macs?",
-    a: "The bundled local model ships as an Apple Silicon binary only. On Intel, everything else works — and you can still opt into an external AI provider with your own API key, or run without AI entirely.",
+    a: "The bundled local model ships as an Apple Silicon binary only. On Intel, everything else works, and you can still opt into an external AI provider with your own API key, or run without AI entirely.",
   },
   {
     q: "Where is my data stored?",
@@ -23,7 +23,7 @@ const faq = [
   },
   {
     q: "Why can’t I sign in to Gmail, or why does Google show an “unverified app” warning?",
-    a: "NoMail’s Google verification is still in progress. Until it completes, Google lets only accounts on NoMail’s tester list sign in with the built-in setup — they see an “unverified app” warning first and are asked to sign in again about once a week. Anyone else can connect Gmail by creating their own Google Cloud OAuth client; NoMail’s onboarding walks you through it. Either way, your mail goes only between your Mac and Google.",
+    a: "NoMail’s Google verification is still in progress. Until it completes, Google lets only accounts on NoMail’s tester list sign in with the built-in setup. They see an “unverified app” warning first and are asked to sign in again about once a week. Anyone else can connect Gmail by creating their own Google Cloud OAuth client; NoMail’s onboarding walks you through it. Either way, your mail goes only between your Mac and Google.",
   },
 ];
 
@@ -35,17 +35,17 @@ const schema = graph(organization(), faqPage(faq));
   description="Help with NoMail, the macOS email client: how updates work, which providers are supported, where your mail is stored, and how to report a bug."
   schema={schema}
 >
-  <div class="container narrow">
+  <div class="container page">
     <header class="page-head">
       <h1>Support</h1>
       <p>
-        Found a bug or missing something? <a href={ISSUES_URL}>Open an issue on GitHub</a> — or
+        Found a bug or missing something? <a href={ISSUES_URL}>Open an issue on GitHub</a>, or
         write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
     </header>
 
     <section>
-      <h2>Frequently asked questions</h2>
+      <h2 class="faq-head">Frequently asked questions</h2>
       <dl class="faq">
         {
           faq.map((item) => (
@@ -60,11 +60,12 @@ const schema = graph(organization(), faqPage(faq));
 
     <section class="sponsor">
       <h2>Sponsor NoMail</h2>
+      <div class="sponsor__body">
       <p>
         NoMail is free, and stays that way. Some of what keeps it running isn’t: Google
         requires an independent annual security assessment before any app may connect to
         Gmail, and code signing and notarization carry their own yearly costs. Sponsorship
-        goes straight at those bills — no features move behind a paywall.
+        goes straight at those bills; no features move behind a paywall.
       </p>
       {
         SPONSORS_CARD ? (
@@ -82,52 +83,69 @@ const schema = graph(organization(), faqPage(faq));
           </p>
         )
       }
+      </div>
     </section>
   </div>
 </Base>
 
+<script>
+  const card = document.querySelector<HTMLIFrameElement>(".sponsor__card");
+  if (card) {
+    window.addEventListener("blur", () => {
+      setTimeout(() => card.classList.toggle("is-focused", document.activeElement === card));
+    });
+    window.addEventListener("focus", () => card.classList.remove("is-focused"));
+  }
+</script>
+
 <style>
-  .narrow {
-    max-width: 720px;
-  }
-
-  .page-head {
-    margin-block: var(--space-8) var(--space-7);
-  }
-
-  .page-head p {
-    color: var(--nm-fg-secondary);
-    font-size: 1.0625rem;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-    margin-bottom: var(--space-5);
-  }
-
   .sponsor {
-    margin-top: var(--space-8);
-    padding-top: var(--space-6);
-    border-top: 1px solid var(--nm-border);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-lg) var(--gap-columns);
+    margin-top: var(--section-gap-s);
+    padding-top: var(--space-xl);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+
+  .sponsor h2,
+  .faq-head {
+    font-size: var(--text-title);
+    line-height: 1.2;
+  }
+
+  .faq-head {
+    margin-bottom: var(--space-lg);
+  }
+
+  .sponsor__body {
+    display: grid;
+    gap: var(--space-lg);
   }
 
   .sponsor p {
-    color: var(--nm-fg-secondary);
+    color: var(--color-ink-2);
   }
 
   /* The card follows prefers-color-scheme itself (data-color-mode="auto"),
      so let the iframe canvas match whichever scheme it paints. */
   .sponsor__card {
-    margin-top: var(--space-5);
     border: 0;
     max-width: 100%;
     color-scheme: light dark;
   }
 
+  /* A focused cross-origin iframe matches neither :focus nor :focus-visible
+     in the parent, so the script below marks it while it holds focus. */
+  .sponsor__card.is-focused {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
   /* The card content grows as the iframe narrows: the bio wraps, and below
      544px GitHub stacks the Sponsor button under the text. Heights measured
      against the live card (127px at full width, 228px at ~330px wide, 270px
-     at ~272px) — re-measure if the sponsor bio changes. */
+     at ~272px). Re-measure if the sponsor bio changes. */
   @media (max-width: 600px) {
     .sponsor__card {
       height: 240px;
@@ -137,6 +155,12 @@ const schema = graph(organization(), faqPage(faq));
   @media (max-width: 380px) {
     .sponsor__card {
       height: 280px;
+    }
+  }
+
+  @media (max-width: 60rem) {
+    .sponsor {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

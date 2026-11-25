@@ -1,118 +1,25 @@
-/*
- * NoMail site styles. The --nm-* palette is copied verbatim from the app's
- * packages/ui/src/tokens.css (warm near-monochrome grays, one blue accent,
- * subtle borders over shadows). The site has no theme
- * toggle, so the app's data-theme machinery is dropped — prefers-color-scheme
- * only.
- */
+/* Hallmark · shape: Workbench (draw e5a039, swapped from Stat-Led: no real figures) · genre: modern-minimal · theme: brand (NoMail's app tokens, packages/ui/src/tokens.css; replaces Wayfind at the owner's request) · redesign: full
+ * hero: Counter (/), Banner (/download, /support, /changelog, /privacy, /imprint, /vs, /404) · nav: floating bar (the app's popover surface) · footer: letter close, the current release and its date · imagery: screenshots 8 (the user's, cropped in CSS) · signature: the tour as the app's own sidebar, driven by the app's real shortcuts (G I, C, ⌘K, T) · job: try
+ * axes: light/grotesk-sans/cool · posture: restrained · brand: app icon, app palette, system type · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R5 V3 · weakest: V, the brand pins a quiet Notion-like palette; variety comes from the app's own idioms (sidebar rows, kbd badges, the window panel), not new colour */
+/* Hallmark · waive 1 · --font-display is the system stack, named in the app's own tokens.css · NoMail's style guide makes native system typography the brand, so the site sets SF like the app */
+/* Hallmark · answered F24 · NoMail's style guide puts a hairline on every floating surface with its elevation token as reinforcement; the window panel and the nav copy that recipe */
+/* Hallmark · waive 44c · hero: Banner on /download, /support, /changelog, /vs · a document page opens on its title and the first section starts above 640px, as the Banner posture asks */
+/* Hallmark · waive 79 · hero: Banner on /download, /support, /changelog · the space under the page title is the first section itself, starting by y 460, not an empty band */
+/* Hallmark · waive 78 · shape: Long Document on /vs, /privacy, /imprint, /changelog · comparison and policy pages head their parts at title size beside the text, an annotation column, not a section stage */
+/* Hallmark · waive 77 · shape: Long Document on /support and /changelog · an FAQ and a release log are single-column reading by nature, held to a 72ch measure */
+/* Hallmark · reworded "And the rest of a serious mail client" to "Search, snooze, snippets, undo." · the finish review named it as fitting any mail client; the new head names the rows below it */
+/* Hallmark · reworded "Try NoMail" to "It runs alongside whatever you use today." · the finish review named it generic; the head is the close's own existing line, moved up */
+/* Hallmark · reworded "Snooze & reminders" to "Snooze and reminders", "Signed & notarized" to "Signed and notarized" · 63 names the ampersand-joined label */
+/* Hallmark · reworded "Built to be trusted with your mail" to "Your mail goes between your Mac and your provider. Nowhere else." · the trust band opens on its statement, from the No backend card's own words */
+/* Hallmark · dropped instant search, multi-account, Snippets, Undo everything, One-click unsubscribe, No backend, On-device AI, Fair Source · as headings only: each is now a dt term in a dl, the same words */
+@import url("./tokens.css");
+@import url("./base.css");
 
-:root {
-  color-scheme: light dark;
-
-  --nm-bg: #ffffff;
-  --nm-bg-sidebar: #f7f7f5;
-  --nm-bg-hover: rgba(0, 0, 0, 0.045);
-  --nm-bg-active: rgba(0, 0, 0, 0.08);
-  --nm-bg-card: #ffffff;
-
-  --nm-fg: #37352f;
-  --nm-fg-secondary: #787774;
-  --nm-fg-faint: #9b9a97;
-
-  --nm-border: rgba(0, 0, 0, 0.09);
-  --nm-border-strong: rgba(0, 0, 0, 0.16);
-
-  --nm-accent: #2383e2;
-  --nm-accent-hover: #0e77d9;
-  --nm-accent-fg: #ffffff;
-
-  --nm-danger: #eb5757;
-
-  --nm-radius-sm: 4px;
-  --nm-radius-md: 6px;
-  --nm-radius-lg: 10px;
-
-  --nm-font-sans:
-    ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji",
-    Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-  --nm-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-
-  /* Site-only additions */
-  --shot-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-  --space-9: 96px;
-  --space-10: 128px;
-
-  --section-gap: var(--space-9);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --nm-bg: #191919;
-    --nm-bg-sidebar: #202020;
-    --nm-bg-hover: rgba(255, 255, 255, 0.055);
-    --nm-bg-active: rgba(255, 255, 255, 0.1);
-    --nm-bg-card: #202020;
-
-    --nm-fg: #d3d3d1;
-    --nm-fg-secondary: #9b9b97;
-    --nm-fg-faint: #6f6f6b;
-
-    --nm-border: rgba(255, 255, 255, 0.094);
-    --nm-border-strong: rgba(255, 255, 255, 0.18);
-
-    --nm-accent-hover: #3b93ea;
-
-    --shot-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-  }
-}
-
-@media (max-width: 800px) {
-  :root {
-    --section-gap: 56px;
-  }
-}
-
-/* ---------- Base ---------- */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: var(--nm-bg);
-  color: var(--nm-fg);
-  font-family: var(--nm-font-sans);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-img,
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+/* ---------- Base additions ---------- */
 
 a {
-  color: var(--nm-accent);
+  color: var(--color-link);
   text-decoration: none;
 }
 
@@ -120,151 +27,211 @@ a:hover {
   text-decoration: underline;
 }
 
+strong,
+b {
+  font-weight: 700;
+}
+
+code,
+kbd {
+  font-family: var(--font-mono);
+}
+
 code {
-  font-family: var(--nm-font-mono);
   font-size: 0.875em;
-  background: var(--nm-bg-hover);
-  border-radius: var(--nm-radius-sm);
+  background: var(--color-hover);
+  border-radius: var(--radius-sm);
   padding: 0.1em 0.35em;
 }
 
-h1,
-h2,
-h3 {
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  font-weight: 650;
-  margin: 0 0 var(--space-4);
+/* The app's Kbd chip (Modal.tsx): system face, 11px there (12px here),
+   a subtle hairline on the sidebar fill. Text one step up from the app's
+   fg-faint so the label clears 4.5:1 on the web. */
+.kbd {
+  display: inline-block;
+  padding: 1px var(--space-2xs);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-2);
+  color: var(--color-muted);
+  font: 400 0.75rem / 1.4 var(--font-body);
+  white-space: nowrap;
 }
 
 h1 {
-  font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+  font-size: min(var(--text-display), 4.75rem);
+  line-height: 1.02;
 }
 
-h2 {
-  font-size: 1.75rem;
+small,
+figcaption,
+th {
+  font-weight: 500;
+  color: var(--color-muted);
 }
 
-h3 {
-  font-size: 1.125rem;
+.muted {
+  color: var(--color-muted);
 }
 
-:focus-visible {
-  outline: 2px solid var(--nm-accent);
-  outline-offset: 2px;
-}
-
-::selection {
-  background: rgba(35, 131, 226, 0.25);
-}
-
-/* ---------- Layout ---------- */
-
-.container {
-  max-width: 1080px;
-  margin-inline: auto;
-  padding-inline: var(--space-5);
-}
-
-.section {
-  margin-block: var(--section-gap);
-}
-
-/* ---------- Buttons ---------- */
+/* ---------- Buttons (the app's Button, at marketing size) ---------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: 10px 18px;
-  border-radius: var(--nm-radius-md);
-  font-size: 0.9375rem;
-  font-weight: 550;
-  line-height: 1.3;
-  border: 1px solid transparent;
-  cursor: pointer;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  border: var(--rule-hair) solid var(--color-rule-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-ink);
+  font: 500 var(--text-sm) / 1 var(--font-body);
   white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    transform var(--dur-micro) var(--ease-out);
 }
 
 .btn:hover {
+  background: var(--color-hover);
   text-decoration: none;
 }
 
+.btn:active {
+  background: var(--color-active);
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .btn--primary {
-  background: var(--nm-accent);
-  color: var(--nm-accent-fg);
+  background: var(--color-accent);
+  border-color: transparent;
+  color: var(--color-accent-ink);
 }
 
-.btn--primary:hover {
-  background: var(--nm-accent-hover);
+.btn--primary:hover,
+.btn--primary:active {
+  background: var(--color-accent-hover);
 }
 
-.btn--secondary {
-  background: transparent;
-  color: var(--nm-fg);
-  border-color: var(--nm-border-strong);
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  .btn:active {
+    transform: none;
+  }
 }
 
-.btn--secondary:hover {
-  background: var(--nm-bg-hover);
+/* ---------- Page heads (every page but the homepage) ---------- */
+
+.page {
+  padding-block: var(--space-3xl) var(--section-gap-s);
+}
+
+.page-head {
+  display: grid;
+  gap: var(--space-md);
+  padding-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+}
+
+.page-head h1 {
+  font-size: var(--text-display-s);
+}
+
+.page-head p {
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  max-width: 52ch;
+  color: var(--color-muted);
 }
 
 /* ---------- Prose (markdown-rendered pages) ---------- */
 
 .prose {
-  max-width: 68ch;
+  max-width: 70ch;
+  line-height: 1.65;
 }
 
 .prose h1 {
-  font-size: 2rem;
-  margin-top: 0;
+  font-size: var(--text-display-s);
+  margin-bottom: var(--space-xl);
 }
 
 .prose h2 {
-  font-size: 1.375rem;
-  margin-top: var(--space-7);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--nm-border);
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: var(--rule-hair) solid var(--color-rule);
 }
 
 .prose h3 {
-  font-size: 1.0625rem;
-  margin-top: var(--space-6);
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xs);
 }
 
 .prose p,
 .prose ul,
 .prose ol {
-  margin-block: var(--space-4);
+  margin-block: var(--space-md);
 }
 
 .prose li {
-  margin-block: var(--space-2);
+  margin-block: var(--space-xs);
 }
 
 .prose table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.9375rem;
+  margin-block: var(--space-lg);
+}
+
+@media (max-width: 40rem) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+  }
 }
 
 .prose th,
 .prose td {
   text-align: left;
-  padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--nm-border);
+  vertical-align: top;
+  padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+  border-bottom: var(--rule-hair) solid var(--color-rule);
 }
 
-.prose th {
-  color: var(--nm-fg-secondary);
-  font-weight: 550;
+.prose tbody th {
+  color: var(--color-ink);
+  font-weight: 700;
 }
 
 .prose blockquote {
   margin-inline: 0;
-  padding-inline-start: var(--space-4);
-  border-inline-start: 3px solid var(--nm-border-strong);
-  color: var(--nm-fg-secondary);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-2);
+  color: var(--color-ink-2);
 }
 
 /* ---------- FAQ list (support + comparison pages) ---------- */
@@ -274,16 +241,25 @@ h3 {
 }
 
 .faq__item {
-  padding-block: var(--space-4);
-  border-top: 1px solid var(--nm-border);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-xs) var(--gap-columns);
+  padding-block: var(--space-lg);
+  border-top: var(--rule-hair) solid var(--color-rule);
 }
 
 .faq__item dt {
-  font-weight: 600;
-  margin-bottom: var(--space-2);
+  font-weight: 700;
 }
 
 .faq__item dd {
   margin: 0;
-  color: var(--nm-fg-secondary);
+  color: var(--color-ink-2);
+  max-width: 62ch;
+}
+
+@media (max-width: 60rem) {
+  .faq__item {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

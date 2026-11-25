@@ -16,20 +16,21 @@ const schema = graph(organization(), softwareApplication(latest?.version, latest
   description="Download NoMail, the local-first email client for macOS. Free, signed, notarized, and auto-updating — for Apple Silicon and Intel Macs."
   schema={schema}
 >
-  <div class="container narrow">
-    <header class="page-head">
-      <h1>Download NoMail</h1>
-      <p>Signed, notarized, and auto-updating — always the latest release.</p>
+  <div class="container page">
+    <header class="page-head dl-head">
+      <div class="dl-head__text">
+        <h1>Download NoMail</h1>
+        <p>Signed, notarized and auto-updating, always the latest release.</p>
+      </div>
+      <DownloadButtons />
     </header>
 
-    <DownloadButtons />
-
-    <section class="requirements">
-      <h2>Requirements</h2>
+    <section class="facts" aria-labelledby="req-head">
+      <h2 id="req-head">Requirements</h2>
       <ul>
         <li>{MIN_MACOS} or later, Apple Silicon or Intel.</li>
         <li>
-          On-device AI (auto-labeling, thread summaries) downloads its model on first run —
+          On-device AI (auto-labeling, thread summaries) downloads its model on first run:
           a one-time ~3.5&nbsp;GB, checksum-verified fetch. Everything else works immediately.
         </li>
         <li>
@@ -39,48 +40,63 @@ const schema = graph(organization(), softwareApplication(latest?.version, latest
       </ul>
     </section>
 
-    <section class="requirements">
-      <h2>Updates</h2>
-      <p>
-        NoMail updates itself: it checks for new releases on launch and every six hours,
-        downloads in the background, and installs when you quit. Release notes are in the app’s
-        “What’s new” panel and on the <a href={withBase("/changelog/")}>changelog</a>.
-      </p>
-      <p>
-        Looking for a specific version? All builds are on <a href={ALL_RELEASES}>GitHub&nbsp;Releases</a>.
-      </p>
+    <section class="facts" aria-labelledby="upd-head">
+      <h2 id="upd-head">Updates</h2>
+      <div class="facts__body">
+        <p>
+          NoMail updates itself: it checks for new releases on launch and every six hours,
+          downloads in the background, and installs when you quit. Release notes are in the app’s
+          “What’s new” panel and on the <a href={withBase("/changelog/")}>changelog</a>.
+        </p>
+        <p>
+          Looking for a specific version? All builds are on <a href={ALL_RELEASES}>GitHub&nbsp;Releases</a>.
+        </p>
+      </div>
     </section>
   </div>
 </Base>
 
 <style>
-  .narrow {
-    max-width: 720px;
+  .dl-head {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-xl) var(--gap-columns);
+    align-items: end;
   }
 
-  .page-head {
-    margin-block: var(--space-8) var(--space-6);
+  .dl-head__text {
+    display: grid;
+    gap: var(--space-lg);
   }
 
-  .page-head p {
-    color: var(--nm-fg-secondary);
-    font-size: 1.0625rem;
+  .facts {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-md) var(--gap-columns);
+    padding-block: var(--space-lg) var(--space-xl);
+    border-bottom: var(--rule-hair) solid var(--color-rule);
   }
 
-  .requirements {
-    margin-top: var(--space-7);
+  .facts h2 {
+    font-size: var(--text-title);
+    line-height: 1.2;
   }
 
-  .requirements h2 {
-    font-size: 1.25rem;
+  .facts ul {
+    margin: 0;
+    padding-left: var(--space-md);
+    display: grid;
+    gap: var(--space-sm);
   }
 
-  .requirements li {
-    margin-block: var(--space-2);
+  .facts__body {
+    display: grid;
+    gap: var(--space-md);
   }
 
-  .requirements p,
-  .requirements ul {
-    color: var(--nm-fg);
+  @media (max-width: 60rem) {
+    .dl-head,
+    .facts {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

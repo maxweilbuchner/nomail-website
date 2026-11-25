@@ -1,6 +1,8 @@
 ---
 import { withBase } from "../lib/url";
 import { ALL_RELEASES } from "../config";
+import rawChangelog from "../content/CHANGELOG.md?raw";
+import { parseChangelog } from "../lib/render-changelog";
 
 const nav = [
   { href: withBase("/download/"), label: "Download" },
@@ -16,19 +18,38 @@ const compare = [
   { href: withBase("/vs/superhuman/"), label: "Superhuman" },
   { href: withBase("/vs/apple-mail/"), label: "Apple Mail" },
 ];
+
+// The letter close: the current release and the day it shipped, synced by the
+// release pipeline, so the footer is never older than the app.
+const latest = parseChangelog(rawChangelog)[0];
+const released = latest
+  ? new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(
+      new Date(`${latest.date}T00:00:00Z`),
+    )
+  : null;
 ---
 
 <footer class="footer">
   <div class="container footer__inner">
-    <nav class="footer__nav" aria-label="Footer">
-      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
-    </nav>
-    <nav class="footer__compare" aria-label="Comparisons">
-      <span>Compare NoMail with</span>
-      {compare.map((item) => <a href={item.href}>{item.label}</a>)}
-    </nav>
+    {
+      latest && (
+        <p class="footer__release">
+          <a href={withBase(`/changelog/#v${latest.version}`)}>NoMail {latest.version}</a>
+          <span>released <time datetime={latest.date}>{released}</time></span>
+        </p>
+      )
+    }
+    <div class="footer__cols">
+      <nav class="footer__nav" aria-label="Footer">
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <nav class="footer__compare" aria-label="Comparisons">
+        <span>Compare NoMail with</span>
+        {compare.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </div>
     <p class="footer__legal">
-      © 2026 NoMail · <a href="https://fsl.software">Fair Source, FSL-1.1-ALv2</a> — each release
+      © 2026 NoMail. <a href="https://fsl.software">Fair Source, FSL-1.1-ALv2</a>: each release
       becomes Apache 2.0 two years after it ships.
     </p>
   </div>
@@ -36,54 +57,78 @@ const compare = [
 
 <style>
   .footer {
-    margin-top: var(--section-gap);
-    border-top: 1px solid var(--nm-border);
-    padding-block: var(--space-6);
-    background: var(--nm-bg-sidebar);
+    margin-top: var(--section-gap-s);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    background: var(--color-paper-2);
+    padding-block: var(--space-2xl) var(--space-xl);
   }
 
   .footer__inner {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
+    display: grid;
+    gap: var(--space-xl);
   }
 
-  .footer__nav {
+  .footer__release {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-4) var(--space-5);
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-sm);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
-  .footer__nav a {
-    color: var(--nm-fg-secondary);
-    font-size: 0.9375rem;
+  .footer__release a {
+    color: var(--color-ink);
   }
 
-  .footer__nav a:hover {
-    color: var(--nm-fg);
-    text-decoration: none;
+  .footer__release span {
+    font-size: var(--text-md);
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--color-muted);
   }
 
+  .footer__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-lg) var(--gap-columns);
+  }
+
+  .footer__nav,
   .footer__compare {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    color: var(--nm-fg-faint);
-    font-size: 0.875rem;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-lg);
+    font-size: var(--text-sm);
   }
 
+  .footer__nav a,
   .footer__compare a {
-    color: var(--nm-fg-secondary);
+    color: var(--color-ink);
+  }
+
+  .footer__compare span {
+    color: var(--color-muted);
   }
 
   .footer__legal {
-    margin: 0;
-    color: var(--nm-fg-faint);
-    font-size: 0.875rem;
+    max-width: none;
+    padding-top: var(--space-lg);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
   }
 
   .footer__legal a {
-    color: var(--nm-fg-faint);
+    color: var(--color-muted);
     text-decoration: underline;
+  }
+
+  @media (max-width: 60rem) {
+    .footer__cols {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

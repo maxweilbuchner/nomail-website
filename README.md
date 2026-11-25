@@ -25,9 +25,19 @@ pnpm preview   # serve the built site
   today, but bare `/…` hrefs would break the moment the site serves from a subpath again.
 - **The base URL lives in one place**: `src/config.ts` (`SITE` + `BASE`). Moving the site
   means changing those two constants and nothing else.
-- **JS budget**: the arch-detection module on `/download/` is the only client script on
-  the site. Keep it that way. (The JSON-LD blocks are `type="application/ld+json"` —
-  data, never executed.)
+- **JS budget**: three small client scripts, each with a no-script fallback. The
+  arch-detection module in `DownloadButtons.astro` (on `/download/` and the homepage
+  hero) swaps the big button to Intel; the homepage tour switches panels by click,
+  arrow keys and the app's own shortcuts (all panels show in order without it); the
+  support page marks the focused Sponsors iframe so it gets a focus ring. Keep new
+  behavior out unless it earns its place the same way. (The JSON-LD blocks are
+  `type="application/ld+json"`: data, never executed.)
+- **The look is the app's.** `src/styles/tokens.css` mirrors NoMail's
+  `packages/ui/src/tokens.css` (warm grays, one blue, system type, 4/6/10px radii,
+  hairlines with the app's elevation shadows); the only departures are web-contrast
+  nudges noted in the file. Change a color there, not in a component. The tour's
+  shortcut chips mirror the app's default bindings: if one changes in the app, update
+  `tour` in `src/pages/index.astro`.
 - **A new page carries its own title, description, and schema.** `Base.astro` defaults
   are written for the homepage: give every other page a title that names the category
   and the platform, a description under 155 characters, and — if it describes the
