@@ -11,6 +11,58 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.9.6 — 2026-11-25
+
+- **Draft with AI** can now rewrite: select text in the composer, press **⌘J**
+  and choose **Shorten**, **More formal** or **Friendlier**, or say how to
+  change it. Only the selected text is replaced. (#671)
+
+- **⌘J** opens Draft with AI from anywhere in the composer, and the command
+  menu has **Draft reply with AI**. (#671)
+
+- **AI activity** lists each labeling or summarizing run with the labels it
+  applied and the conversations it touched, and **Undo** takes back exactly
+  that run. Open it from the AI pill in the sidebar or with **Open AI
+  activity** in the command menu. (#670)
+
+- A new message in a conversation you had moved to Trash or marked as spam
+  now shows up in the Inbox. It used to stay hidden in the Trash with the rest
+  of the conversation. Conversations already hidden this way reappear after
+  the update. (#672)
+
+- The command menu (**⌘K**) has AI commands: **Summarize conversation**,
+  **Label inbox now** and **AI settings…**. They appear only when the AI
+  provider can do them, and a conversation's summary card now updates on its
+  own when a summary is written. (#658)
+
+- **Settings › AI** replaces Settings › Intelligence and groups its options
+  under **Organize**, **Read** and **Write**. One **Summaries** setting (Off,
+  When opened, When mail arrives) replaces the two summary switches. (#657)
+
+- **Label inbox now**, **Learn from my labels** and each label's Auto / Suggest
+  only / Off mode moved from the AI panel to **Settings › AI**. **Reply
+  suggestions** is now called **Quick replies**. (#657)
+
+- **⌘S** hides and shows the sidebar. It replaces **⌃⌘S**, which no longer
+  does anything. (#662)
+
+- The status dot beside "Automatic labeling…" in the AI provider card lines up
+  with its text. (#655)
+
+- Notifications have a **Mark read** button, and **Settings › General ›
+  Notification buttons** chooses which of **Mark read**, **Reply** and
+  **Delete** appear. Mark read clears the conversation's unread state without
+  bringing NoMail forward. (#652)
+
+- **Summarize** and **Refresh** on a conversation's summary card now work if
+  you had only auto-summarize turned on; they used to do nothing. (#656)
+
+- The AI provider's consent text names what is actually sent: summaries,
+  drafting, reply suggestions and label setup proposals. (#656)
+
+- The sidebar toggle beside the window controls shows a hidden sidebar again.
+  Clicking it while the sidebar was hidden used to start a window drag instead.
+
 ## 0.9.5 — 2026-11-25
 
 - The AI provider's **Model** field is now a list of the models your key can
