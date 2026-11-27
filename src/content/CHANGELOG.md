@@ -11,6 +11,48 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.10.0 — 2026-11-26
+
+- **Ask AI…** in **⌘K** organizes mail from a request in plain words, such as
+  "archive newsletters older than a week". It shows the plan first, and nothing
+  changes until you apply it. It needs a connected AI provider and never sends
+  mail. (#683)
+
+- An Ask AI plan lists each action with the conversations it covers, and you
+  can leave any of them out. Every run can be undone from AI activity. (#683)
+
+- **Ask AI…** can write reply drafts, up to ten per request: "draft a polite
+  decline to this week's recruiter mail". The drafts wait in Drafts and nothing
+  is sent. (#686)
+
+- **Rules** in Settings › AI: say in plain words what should happen to new
+  mail, such as "from recruiters: label Recruiting and archive". NoMail shows
+  how it understood the rule before you save it. (#688)
+
+- A rule first proposes what it would do, in **AI activity**, where you apply
+  or dismiss it. Set to **Automatic**, it runs on its own once you have approved
+  it often enough. Rules never send mail and every run can be undone. (#688)
+
+- **Rules** can depend on what a message means, such as "mail from support
+  that sounds urgent: star it". The AI is asked about each new message that
+  passes the rule's filter, and such a rule always proposes. (#694)
+
+- **Ask AI…** and **Rules** can file mail under a label that does not exist
+  yet. It is marked "(new label)" and created only when you apply the plan or
+  save the rule. (#698)
+
+- Summaries are now written in the language of the conversation. With the
+  on-device model this takes about a second longer for mail that is not in
+  English. (#695)
+
+- Changing a conversation twice in quick succession, such as labeling it and
+  undoing straight away, no longer shows the first change again for a moment. (#690)
+
+- Summaries set to **When opened** now summarize a conversation when you open
+  it, without pressing **Summarize**. One-line notes are skipped and keep the
+  button. **When mail arrives** still summarizes new inbox mail and leaves
+  everything else to the button.
+
 ## 0.9.6 — 2026-11-25
 
 - **Draft with AI** can now rewrite: select text in the composer, press **⌘J**
