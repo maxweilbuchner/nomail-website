@@ -11,6 +11,19 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.11.0 — 2026-11-27
+
+- **Ask AI** is now a sidebar on the right instead of a dialog, so your mail
+  stays visible and usable while you read the plan. Open it with the sparkle
+  button at the top right or **⌘J**. (#715)
+
+- Ask AI keeps a conversation: a follow-up such as "only the unread ones"
+  refines the plan before it, and an applied plan stays in the thread with
+  its **Undo**. (#715)
+
+- **Draft reply with AI** from **⌘K** always puts the cursor in the AI bar. On
+  fast machines it could land in the reply body instead. (#710)
+
 ## 0.10.0 — 2026-11-26
 
 - **Ask AI…** in **⌘K** organizes mail from a request in plain words, such as
