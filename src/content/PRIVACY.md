@@ -1,6 +1,6 @@
 # NoMail Privacy Policy
 
-**Last updated: 31 July 2026**
+**Last updated: 28 November 2026**
 
 NoMail is a desktop email client for macOS. It runs entirely on your computer. It
 has no backend, no accounts system, and no servers operated by us that your mail
@@ -8,8 +8,8 @@ passes through. When NoMail talks to the network, it talks directly to your mail
 provider — Google, Microsoft, or your own IMAP/JMAP server — using credentials
 you grant it.
 
-This policy explains what data NoMail touches, where that data lives, and the one
-narrow case in which anything leaves your machine.
+This policy explains what data NoMail touches, where that data lives, and the two
+cases in which anything leaves your machine. Both are off until you turn them on.
 
 ## Google user data
 
@@ -43,8 +43,9 @@ independently of the operating system's disk encryption.
 
 ## What we do *not* do
 
-- We do not transmit your mail, calendar data, contacts, or attachments to us or
-  to any third party.
+- We do not transmit your mail, calendar data, contacts, or attachments to us.
+  Nothing goes to a third party either, unless you connect an AI provider
+  yourself (see below).
 - We do not sell or share your data with advertisers, data brokers, or any other
   party.
 - We do not use your data for advertising, credit assessment, or lending decisions.
@@ -54,16 +55,43 @@ independently of the operating system's disk encryption.
 
 ## Artificial intelligence features
 
-NoMail can label and summarize your mail automatically. This runs a language model
-**bundled with the app and executed on your own computer**. Your mail is not sent
-to any AI service, ours or a third party's, to produce these labels and summaries,
-and it is not used as training data. What the model learns about how you file mail
-is stored locally and is not synchronized anywhere.
+NoMail can label and summarize your mail automatically. By default this runs a
+language model **executed on your own computer**. In that setup your mail is not
+sent to any AI service, ours or a third party's, and it is not used as training
+data. What the model learns about how you file mail is stored locally and is not
+synchronized anywhere.
 
-Model weights are downloaded once from a fixed, checksum-verified URL on first run.
-That download carries no information about you or your mail.
+Model weights are downloaded once from a fixed, checksum-verified URL when you
+choose to download them. That download carries no information about you or your
+mail.
 
-## Crash reports — the one exception, and it is opt-in
+### If you connect your own AI provider
+
+Instead of the on-device model, you can connect an AI provider of your choice in
+Settings › AI — OpenAI, Anthropic, xAI, Google Gemini, or a server you run
+yourself — with an API key that you supply. This is off until you set it up, and
+the app asks for your consent, naming what will be sent, before it connects.
+
+Once connected, the AI features you turn on send mail content directly from your
+computer to that provider: for summaries, drafts and reply suggestions, the
+subjects, senders and text of the messages involved; for Ask AI requests and
+rules the AI judges, the subject, sender and preview of the conversations
+involved, together with what you asked; for label setup, the subject, sender
+and opening text of a sample of your conversations. A feature you have not
+turned on sends nothing.
+
+That content goes to the provider under your own account with it. It does not
+pass through us, and we never receive it. What the provider does with it —
+including how long it is kept and whether it is used for training — is governed
+by your agreement with that provider, so choose one whose terms you accept. The
+part of automatic labeling that learns from your mail runs on your computer in
+either setup.
+
+You can disconnect the provider at any time in Settings › AI; nothing further is
+sent after that. Your API key is stored encrypted on your device, the same way
+account tokens are.
+
+## Crash reports — opt-in
 
 Crash reports are **off by default**. If — and only if — you turn on Settings ›
 General › Crash reports, NoMail uploads crash dumps to an error-tracking service

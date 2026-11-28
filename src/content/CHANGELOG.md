@@ -11,6 +11,75 @@ welcome as history here and stripped from everything users see.
 
 ## Unreleased
 
+## 0.12.0 — 2026-11-28
+
+- Ask AI now checks who a request's mail is from before it plans, so "archive
+  newsletters" covers the senders it judges to be newsletters rather than
+  everything that carries an unsubscribe link. A plan over many conversations
+  lists its senders, so you can see what it covers. (#717)
+
+- An Ask AI plan that fails partway now keeps what it already changed as a run
+  you can undo, and says where it stopped. Applying it again could write the
+  same reply drafts twice. (#728)
+
+- **Undo** in Ask AI now shows the run as undone when you already took it back
+  from AI activity, and says so if an undo fails. (#729)
+
+- A follow-up in Ask AI that fails no longer takes the plan before it out of
+  reach: that plan can still be applied. (#731)
+
+- The shortcut you set for **Ask AI…** now also closes the sidebar while you
+  are typing in it; it used to answer **⌘J** only. (#733)
+
+- An Ask AI plan built from the senders it looked up stays within what that
+  lookup matched, so a limit such as "older than a week" can no longer be
+  dropped along the way. (#730)
+
+- The consent line for connecting an AI provider, and the provider card, now
+  name **Ask AI** requests and the rules the AI judges among what is sent. (#720)
+
+- **Ask AI…** is now in **⌘K** even without a provider that can run it, and
+  the sidebar then says what to connect, with a link to Settings › AI. (#721)
+
+- The example requests in an empty Ask AI sidebar can be clicked to put them
+  in the box, ready to edit. (#722)
+
+- Ask AI says what a request ran over only where that changes, instead of
+  under every message. (#723)
+
+- In Settings › AI, the coloured dot beside a rule names its state when you
+  hover it, and the Rules section has a single title. (#725)
+
+- The **AI settings** link at the bottom of AI activity now looks like a link. (#724)
+
+- Settings › AI lists what the AI can do before a model is downloaded or a
+  provider connected, so you can see what you are choosing. (#726)
+
+- With the Ask AI sidebar open, notices such as **Undo** appear over the
+  mailbox instead of across the sidebar, and the top bar drops its Commands
+  hint when there is no room for it. (#727)
+
+- Automatic labeling and quick replies now know which mailing list a message
+  came through, so list mail is filed by its list and gets no suggested
+  replies even without an unsubscribe link. Mail already in the app is caught
+  up in the background over the next syncs. (#719, #740)
+
+- **Draft reply with AI** keeps the cursor in the AI bar on any machine; the
+  earlier fix still depended on timing. (#732)
+
+- Microsoft accounts now get the **Unsubscribe** button and count as
+  newsletters where a message offers an unsubscribe link, once the message has
+  been opened or fetched in full. (#737)
+
+- The **privacy policy** now describes connecting your own AI provider: what
+  the features you turn on send to it, that it goes there directly under your
+  own account, and that we never receive it. Nothing about the default
+  on-device setup changes. (#738)
+
+- On a narrow window, opening the Ask AI sidebar hides the mailbox sidebar so
+  the list keeps its width; it comes back when you close Ask AI or widen the
+  window. (#739)
+
 ## 0.11.0 — 2026-11-27
 
 - **Ask AI** is now a sidebar on the right instead of a dialog, so your mail
